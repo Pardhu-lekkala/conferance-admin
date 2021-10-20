@@ -1,0 +1,97 @@
+.cont-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+    position: absolute;
+    width: 496px;
+    height: 300px;
+    left: 472px;
+    top: 250px;
+    background: #FFFFFF;
+    border: 1px solid #C4C4C4;
+    box-sizing: border-box;
+    border-radius: 6px;
+}
+
+.head-style{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: flex-start;
+    padding: 0px;
+    position: static;
+    width: 282px;
+    height: 44px;
+    left: 0px;
+    top: 0px;
+    font-family: Proxima Nova;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 32px;
+    line-height: 44px;
+    color: #002E5A;
+}
+
+.para-style{
+    display: flex;
+    align-self: flex-start;
+    font-family: Proxima Nova;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    color: #3C4858;
+}
+
+.inp-style{
+    height: 48px;
+    width: 448px;
+    background: #FFFFFF;
+    border: 1px solid #C0CCDA;
+    box-sizing: border-box;
+    border-radius: 4px;
+}
+
+.btn-style{
+    position: static;
+    width: 448px;
+    height: 44px;
+    left: 0px;
+    top: 96px;
+    background: #8391A7;
+    border-radius: 4px;
+    flex: none;
+    margin: 10px;
+    border-width: 0px;
+    font-family: Proxima Nova;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 24px;
+    text-align: center;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+.btn-style2{
+    position: static;
+    width: 448px;
+    height: 44px;
+    left: 0px;
+    top: 96px;
+    background: #002E5A;
+    border-radius: 4px;
+    flex: none;
+    margin: 10px;
+    border-width: 0px;
+    font-family: Proxima Nova;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 24px;
+    text-align: center;
+    color: #FFFFFF;
+    cursor: pointer;
+}
