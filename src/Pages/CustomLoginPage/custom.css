@@ -126,12 +126,31 @@
     color: #FFFFFF;
 }
 
+.cs-btn2{
+    position: static;
+    width: 448px;
+    height: 44px;
+    left: 0px;
+    top: 390px;
+    background: #002E5A;
+    border-radius: 4px;
+    border-width: 0px;
+    margin-top: 10px;
+    font-family: Proxima Nova;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 24px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
 .btn-cont2{
     display: flex;
     flex-direction: row;
     padding-left: 15px;
     position: fixed;
-    margin-left: 85rem;
+   
     background: #FFFFFF;
     border: 1px solid #C4C4C4;
     border-radius: 6px;
@@ -155,5 +174,53 @@
     text-align: center;
     color: #8391A7;
 
+}
+
+.uploaded{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    position: static;
+    background: rgba(255, 213, 124, 0.8);
+    border: 1px solid #FFD57C;
+    box-sizing: border-box;
+    border-radius: 4px;
+    height: 30px;
+    margin: 5px;
+}
+
+.uploaded-2{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 8px;
+    position: static;
+    background: #FFE5E5;
+    border: 1px solid #FFE5E5;
+    box-sizing: border-box;
+    border-radius: 4px;
+    height: 30px;
+    margin: 5px;
+}
+
+.upload-text{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 0px;
+    font-family: Proxima Nova;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    color: #1C2C40;
+    
+}
+
+.swap-img{
+    height: 18px;
+    width: 18px;
 }
 

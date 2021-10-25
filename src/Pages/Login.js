@@ -1,8 +1,9 @@
 import { makeStyles,  } from '@material-ui/core/styles';
 import React, { useState } from 'react';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import { useHistory } from 'react-router';
+import Spinner from '../Components/Spinner';
+import Loader from 'react-loader-spinner';
 import {
     Input,
     Grid,
@@ -65,6 +66,14 @@ const useStyles = makeStyles((theme) => ({
         display:"flex",
         alignSelf:"flex-start",
         marginTop:"10px"
+    },
+    invtxt:{
+      fontFamily:"Proxima Nova",
+      fontWeight:"600",
+      fontSize:"16px",
+      fontStyle:"normal",
+      lineHeight:"20px",
+      color:"red"
     }
     
 }));
@@ -75,15 +84,24 @@ function Login(){
   function navigateToForPass(){
     history.push("/forgotpassword")
   }
+  function navigateRegister(){
+    history.push("/signUp")
+  }
+
   const theme = useTheme();
   const [identifier,setIdentifier]=useState();
   const [password,setPassword]=useState();
-  const [islogin,setIslogin]=useState(false)
-  
+  const [islogin,setIslogin]=useState(false);
+  const [jwt,setJwt]=useState("");
+  const [click,setClick]=useState(false);
+  const [loader,setLoader]=useState(false);
+  const [validation,setValidation]=useState(false)
+
   async function signUp(){
       let userDetails={identifier,password}
       console.log(userDetails)
-
+      setClick(true)
+      setLoader(true)
       let result=await fetch('http://18.222.221.0:1337/auth/local',{
          method:"POST",
          body:JSON.stringify(userDetails),
@@ -93,7 +111,11 @@ function Login(){
       })
       result=await result.json()
       if (result.jwt !== undefined){
+        setJwt(result.jwt)
+        console.log(result.jwt)
         setIslogin(true)
+        setLoader(false)
+        console.log(loader)
         history.push("/home")
       }
       localStorage.setItem('login',JSON.stringify(result))
@@ -135,11 +157,20 @@ function Login(){
     <button
     className={classes.button}
     onClick={signUp}
+    style={{display:"flex",justifyContent:"center",alignItems:"center"}}
     >
-    Login
+    {loader == false && jwt == "" && click==false ?<p>Login</p>:
+    <Loader type="TailSpin"
+        color="#00BFFF"
+        height={30}
+        width={30}
+        />}
     </button>
-    </Grid>  
-    
+    {jwt == "" && click==true ?<p className={classes.invtxt}>*Invalid Username or Password</p>:null}
+    <div  style={{display:"flex",flexFlow:"row",justifyContent:"center"}} onClick={navigateRegister}>
+    <h1 className={classes.para}>Create an Account</h1>
+    </div>
+    </Grid>     
 </div>
   );
 };

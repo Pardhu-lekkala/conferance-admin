@@ -4,11 +4,19 @@ import NavBar from "../../Components/NavItem";
 import './project.css'
 import { useHistory } from "react-router";
 
+
 const CreateProject=()=>{
     const [project,setProject]=useState("")
+    const [accessCode,setAccessCode]=useState(Math.floor(100000 + Math.random() * 900000))
     const history=useHistory();
     function navigateToCustom(){
-        history.push("/customlogin")
+        history.push({
+            pathname:'/customlogin',
+            state:{
+                project:project,
+                accessCode:accessCode
+            }
+        })  
     }
     return(
         <div>

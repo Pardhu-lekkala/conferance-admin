@@ -1,6 +1,7 @@
 import { makeStyles,  } from '@material-ui/core/styles';
 import React, { useState } from 'react';
 import { useTheme } from '@material-ui/core/styles';
+import { useHistory } from 'react-router';
 import {
     Input,
     Grid,
@@ -67,11 +68,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function SignUp(props) {
+  const history=useHistory();
   const classes = useStyles();
   const theme = useTheme();
   const [username,setUsername]=useState();
   const [password,setPassword]=useState();
   const [email,setEmail]=useState();
+  const [jwt1,setJwt1]=useState("");
 
   async function signUp(){
       let userDetails={email,username,password}
@@ -87,9 +90,13 @@ function SignUp(props) {
       })
       result=await result.json()
       console.log(result,"pardhu")
+      setJwt1(result)
       localStorage.setItem('user-info',JSON.stringify(result))
   }
   
+  function navigateLogin(){
+      history.push("/")
+  }
   return (
     <div style={{backgroundColor:"#0A3C6B",height:"100vh",marginTop:"0px",display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center"}}>
     <div>    
@@ -129,7 +136,6 @@ function SignUp(props) {
         onChange={(e)=>setPassword(e.target.value)}
       />
       <Grid style={{display:"flex",flexDirection:"row",justifyContent:"flex-end"}}>
-      <p className={classes.para}>Forgot Password?</p>
      </Grid>
     </div>
 
@@ -138,10 +144,12 @@ function SignUp(props) {
     className={classes.button}
     onClick={signUp}
     >
-    Create an Account
+    {jwt1 ==""?"Create an Account":"Account Created Successfully"}
     </button>
     </Grid>  
-    
+    <div onClick={navigateLogin} style={{display:"flex",flexDirection:"row",justifyContent:"flex-end"}}>
+    <h1 className={classes.para}>Back to SignIn</h1>
+    </div>
 </div>
   );
 };
