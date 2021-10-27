@@ -58,7 +58,7 @@
     font-size: 16px;
     line-height: 24px;
     color: #FFFFFF;
-
+    cursor: pointer;
 }
 
 .btn-cont3{
@@ -101,6 +101,7 @@
     line-height: 24px;
     text-align: center;
     color: #252C66;
+    cursor: pointer;
 }
 
 .play-img2{

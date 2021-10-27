@@ -2,8 +2,6 @@ import React,{useRef}from "react";
 import NavBar from "../../Components/NavItem";
 import SideBar from "../../Components/NavItem/SideBar";
 import "./index.css";
-import play from "../../Assets/Images/Frame.png"
-import { useState } from "react";
 import edit from "../../Assets/Images/Vector.png";
 import edit2 from "../../Assets/Images/edit2.png";
 import { useHistory } from "react-router";

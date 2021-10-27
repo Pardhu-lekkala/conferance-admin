@@ -9,6 +9,8 @@ import CustomLogin from "./Pages/CustomLoginPage";
 import ProjectDetails from "./Components/DetailsCard";
 import CreateNewPage from "./Pages/CreateNewPage";
 import AddPage from "./Pages/AddPage";
+import AddMarker from "./Components/AddMarker";
+import AddVideoArea from "./Components/AddVideoArea";
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
             <Route exact path={"/projectdetails"} component={ProjectDetails}/>
             <Route exact path={"/newpage"} component={CreateNewPage}/>
             <Route exact path={"/addpage"} component={AddPage}/>
+            <Route exact path={"/markerlocation"} component={AddMarker}/>
+            <Route exact path={"/videoarea"} component={AddVideoArea}/>
           </Switch>
         </BrowserRouter>
     </div>

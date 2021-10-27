@@ -162,11 +162,11 @@ const CustomLogin=(props)=>{
                 <img src={swap} alt="..." className="swap-img"/>
                 </div>)}
                 {/* *********************CONDITION FOR FILE FORMATE******************************************/}
-                {fileTransitionType !== "video/mp4" || fileTransitionType !== "video/flv"  && 
+                {(fileTransitionType !== "video/mp4" && fileTransitionType !== "video/flv" && transitionName !== "")?
                 (<div className="uploaded-2">
                 <img src={report} alt="..." className="swap-img" style={{marginRight:"10px"}}/>    
                 <p className="upload-text">File format not supported.Please upload mp4,flv</p>
-                </div>)}
+                </div>):null}
                 {/************************************START CONDITION*****************************************/}
                 {transitionName == "" &&
                 <p className="img-para2">MP4,FLV Formats are supported</p>}

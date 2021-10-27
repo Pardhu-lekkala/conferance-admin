@@ -4,6 +4,7 @@ import { useTheme } from '@material-ui/core/styles';
 import { useHistory } from 'react-router';
 import Spinner from '../Components/Spinner';
 import Loader from 'react-loader-spinner';
+import logo from "../Assets/Images/logo.png";
 import {
     Input,
     Grid,
@@ -95,13 +96,16 @@ function Login(){
   const [jwt,setJwt]=useState("");
   const [click,setClick]=useState(false);
   const [loader,setLoader]=useState(false);
-  const [validation,setValidation]=useState(false)
+  const [errorMsg,SetErrMsg]=useState("")
 
   async function signUp(){
       let userDetails={identifier,password}
       console.log(userDetails)
       setClick(true)
       setLoader(true)
+      if (loader==false){
+        SetErrMsg("*Invalid Username or Password")
+      }
       let result=await fetch('http://18.222.221.0:1337/auth/local',{
          method:"POST",
          body:JSON.stringify(userDetails),
@@ -112,7 +116,7 @@ function Login(){
       result=await result.json()
       if (result.jwt !== undefined){
         setJwt(result.jwt)
-        console.log(result.jwt)
+        console.log(result)
         setIslogin(true)
         setLoader(false)
         console.log(loader)
@@ -123,6 +127,9 @@ function Login(){
   console.log(islogin)
   return (
     <div style={{backgroundColor:"#0A3C6B",height:"100vh",marginTop:"0px",display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center"}}>
+    <div style={{height:"100px",width:"150px",marginBottom:"25px",marginRight:"35px"}}>
+      <img src={logo} style={{height:"100%",width:"100%"}}/>
+    </div>  
     <div>    
       <label 
       htmlFor="email" 
@@ -166,7 +173,7 @@ function Login(){
         width={30}
         />}
     </button>
-    {jwt == "" && click==true ?<p className={classes.invtxt}>*Invalid Username or Password</p>:null}
+    {jwt == "" && click==true ?<p className={classes.invtxt}>{errorMsg}</p>:null}
     <div  style={{display:"flex",flexFlow:"row",justifyContent:"center"}} onClick={navigateRegister}>
     <h1 className={classes.para}>Create an Account</h1>
     </div>
