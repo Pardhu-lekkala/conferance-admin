@@ -234,7 +234,7 @@ const AddPage=(props)=>{
         
         </div>  
         <VideoUploadCard open={open} setOpen={setOpen}/>
-        <MarkerCard opens={opens} setOpens={setOpens}/>
+        <MarkerCard opens={opens} pageId={pageId} token={token} setOpens={setOpens} />
     </>
     )
 }

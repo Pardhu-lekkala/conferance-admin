@@ -34,6 +34,9 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
       const [markerVideoLink,setMarkerVideoLink]=React.useState("");
       const [labelSwitch,setLabelSwitch]=React.useState(false);
       const {opens,setOpens} =props;
+      const id=props.pageId
+      const token=props.token
+      console.log(id,"pageid")
       console.log(markerVideo)
       console.log(markerInpName)
       console.log(destinationType)
@@ -52,12 +55,24 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     
     function navigateMarker(){
       if(markerInpName !== "" && destinationType !== "" && markerVideoLink !== "" && markerVideo !== ""){
-        history.push("/markerlocation")
+        history.push({
+          pathname:'/markerlocation',
+          state:{
+              pageId:id,
+              token:token,
+              markerName:markerInpName,
+              destinationType:destinationType,
+              destinationLink:markerVideoLink,
+              VisibileLabel:labelSwitch,
+              TransVideo:markerVideo
+          }
+      })  
       }
     }
     const handleMarkerVideoChange=(e) =>{
       let markerVideofiles=e.target.files
       setMarkerVideoName(markerVideofiles[0].name)
+      setMarkerVideo(e.target.files[0])
       console.log("data file",markerVideofiles[0].type)
       let fileMarkerVideoLen=markerVideofiles[0].size/1048576
       console.log(fileMarkerVideoLen)
@@ -67,7 +82,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
       reads.readAsDataURL(markerVideofiles[0])
       reads.onload=(e)=>{
           console.log("img data",e.target.result)
-          setMarkerVideo(e.target.result)
+          //setMarkerVideo(e.target.result)
       }   
   }   
     return (
