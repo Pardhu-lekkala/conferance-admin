@@ -1,4 +1,6 @@
-.area-img{
+.area-image{
     height: 90vh;
     width: 100%;
+    background: no-repeat;
+    background-size: cover;
 }

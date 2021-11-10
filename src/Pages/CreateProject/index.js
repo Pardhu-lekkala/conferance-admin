@@ -5,7 +5,8 @@ import './project.css'
 import { useHistory } from "react-router";
 
 
-const CreateProject=()=>{
+const CreateProject=(props)=>{
+    console.log(props.location.state.token,"kkkkk")
     const [project,setProject]=useState("")
     const [accessCode,setAccessCode]=useState(Math.floor(100000 + Math.random() * 900000))
     const history=useHistory();
@@ -14,7 +15,8 @@ const CreateProject=()=>{
             pathname:'/customlogin',
             state:{
                 project:project,
-                accessCode:accessCode
+                accessCode:accessCode,
+                token:props.location.state.token,
             }
         })  
     }

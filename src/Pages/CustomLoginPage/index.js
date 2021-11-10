@@ -7,6 +7,7 @@ import { useState } from "react";
 import swap from "../../Assets/Images/swap.png";
 import report from "../../Assets/Images/report_problem.png";
 import { useHistory } from "react-router";
+import axios from "axios";
 
 const CustomLogin=(props)=>{
     const history=useHistory();
@@ -14,36 +15,112 @@ const CustomLogin=(props)=>{
     const fileVideoRef=useRef();
     const fileTransitionRef=useRef();
     //const fileType=["jpg","png","gif"]
-    const [image,setImage]=React.useState()
+    const [backgroundImage,setImage]=React.useState()
     const [imgName,setImgName]=React.useState("")
     const [fileType,setFileType]=React.useState("")
     const [fileSize,setFileSize]=React.useState(15);
-    const [video,setVideo]=React.useState("");
+    const [backgroundVideo,setVideo]=React.useState("");
     const [videoName,setVideoName]=React.useState("");
     const [fileVideoType,setFileVideoType]=React.useState("")
     const [fileVideoSize,setFileVideoSize]=React.useState(15);
-    const [transition,setTransition]=React.useState("");
+    const [transVideo,setTransition]=React.useState("");
     const [transitionName,setTransitionName]=React.useState("");
     const [fileTransitionType,setFileTransitionType]=React.useState("")
     const [fileTransitionSize,setFileTransitionSize]=React.useState(15);
+    const [id,setId]=React.useState()
+{/*******************************************API PROJECT DETAILS***************************************************/} 
+    //let files={backgroundImage,backgroundVideo,transVideo}
+    //console.log(files.backgroundImage,"bcccccccc")
+    console.log(backgroundImage,"cccccccc")
+    console.log(id)
+    let token=props.location.state.token
+    let name=props.location.state.project
+    let accesscode=props.location.state.accessCode
+    //let id=Math.random();
+    let markerColor="red"
+    let Description="NA"
+    let primaryColor="#ffffff"
+    let secondaryColor="#ddddd"
+    
+    var formData = new FormData();
+    formData.append('files.backgroundImage', backgroundImage); 
+    formData.append('files.backgroundVideo',backgroundVideo)
+    formData.append('files.transVideo',transVideo)
+    formData.append('data',JSON.stringify({
+        'name':name,
+        'markerColor':markerColor,
+        'primaryColor':primaryColor,
+        'secondaryColor':secondaryColor,
+        'Description':"This is Description"
+        //'files.backgroundImage':backgroundImage
+    }))
 
+    console.log(name,token,accesscode)
     function navigateNewPage(){
-        if (imgName !== "" && videoName !== "" && transitionName !== ""){
+        if (imgName !== "" && videoName !== "" && transitionName !== "" && id !== undefined){
             history.push({
                 pathname:'/newpage',
                 state:{
                     project:props.location.state ? props.location.state.project:null,
                     accessCode:props.location.state ? props.location.state.accessCode : null,
-                    image:image
+                    token:props.location.state.token,
+                    image:backgroundImage,
+                    id:id
                 }
             })
         }
     }
+
+    async function postProject(){
+        navigateNewPage()
+        axios({
+            method: "post",
+            url: "http://18.222.221.0:1337/projects",
+            data: formData,
+            headers: { 
+                "Content-Type": "multipart/form-data",
+                "Authorization":"Bearer"+" "+token,
+            },
+          })
+            .then(function (response) {
+              console.log(response.data.id);
+              setId(response.data.id)
+            })
+            .catch(function (response) {
+              console.log(response);
+            });
+    }
+   
+
+    {/*async function postProject(){
+        let data={
+            name,
+            markerColor,
+            Description,
+            primaryColor,
+            secondaryColor,
+            //"backgroundImage":files.backgroundImage
+        }
+        navigateNewPage()
+        let result=await fetch('http://18.222.221.0:1337/projects',{
+           method:"POST",
+           body:JSON.stringify(data,files.backgroundImage),
+           headers:{
+               "Content-Type":"application/json",
+               "Authorization":"Bearer"+" "+token,
+           }
+        })
+        result=await result.json()
+        console.log(result,"projectdetails")
+        localStorage.setItem('login',JSON.stringify(result))
+    }*/}
+    
     
     const handleChange=(e) =>{
         let files=e.target.files
         setImgName(files[0].name)
-        console.log("data file",files[0].type)
+        setImage(e.target.files[0])
+        console.log("data file",files[0])
         let fileLen=files[0].size/1048576
         setFileSize(fileLen)
         setFileType(files[0].type) 
@@ -51,12 +128,14 @@ const CustomLogin=(props)=>{
         reader.readAsDataURL(files[0])
         reader.onload=(e)=>{
             console.log("img data",e.target.result)
-            setImage(e.target.result)
+            //setImage(e.target.result)
+            //setImage(files[0])
         }   
     }
     const handleVideoChange=(e) =>{
         let videofiles=e.target.files
         setVideoName(videofiles[0].name)
+        setVideo(e.target.files[0])
         console.log("data file",videofiles[0].type)
         let fileVideoLen=videofiles[0].size/1048576
         console.log(fileVideoLen)
@@ -66,13 +145,14 @@ const CustomLogin=(props)=>{
         read.readAsDataURL(videofiles[0])
         read.onload=(e)=>{
             console.log("img data",e.target.result)
-            setVideo(e.target.result)
+            //setVideo(e.target.result)
         }   
     }   
     
     const handleTransitionChange=(e) =>{
         let transitionfiles=e.target.files
         setTransitionName(transitionfiles[0].name)
+        setTransition(e.target.files[0])
         console.log("data file",transitionfiles[0].type)
         let fileTransitionLen=transitionfiles[0].size/1048576
         setFileTransitionSize(fileTransitionLen)
@@ -81,7 +161,7 @@ const CustomLogin=(props)=>{
         readTrans.readAsDataURL(transitionfiles[0])
         readTrans.onload=(e)=>{
             console.log("img data",e.target.result)
-            setTransition(e.target.result)
+            //setTransition(e.target.result)
         }   
     }   
     return(
@@ -183,7 +263,7 @@ const CustomLogin=(props)=>{
                     <button className="pr-btn">Preview</button>
                 </div>
                 <div>
-                    <button className={`${imgName == "" ? "cs-btn" : "cs-btn2"}`} onClick={navigateNewPage}>Customize</button>
+                    <button className={`${imgName == "" ? "cs-btn" : "cs-btn2"}`} onClick={postProject}>Customize</button>
                 </div>
                 </div>
                 <div className="btn-cont2">

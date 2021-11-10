@@ -4,10 +4,16 @@ import './Home.css'
 import folder from "../Assets/Images/EmptyState.png"
 import { useHistory } from "react-router";
 
-const Home=()=>{
+const Home=(props)=>{
   const history=useHistory()
+  console.log(props.location.state.token,"saiiii")
   function navigate(){
-    history.push("/createproject")
+    history.push({
+      pathname:'/createproject',
+      state:{
+          token:props.location.state.token,
+      }
+  }) 
   }
   return(
     <div>

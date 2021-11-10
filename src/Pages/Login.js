@@ -120,7 +120,12 @@ function Login(){
         setIslogin(true)
         setLoader(false)
         console.log(loader)
-        history.push("/home")
+        history.push({
+          pathname:'/home',
+          state:{
+              token:result.jwt,
+          }
+      }) 
       }
       localStorage.setItem('login',JSON.stringify(result))
   }

@@ -11,6 +11,8 @@ import CreateNewPage from "./Pages/CreateNewPage";
 import AddPage from "./Pages/AddPage";
 import AddMarker from "./Components/AddMarker";
 import AddVideoArea from "./Components/AddVideoArea";
+import VideoPlayer from "./Components/VideoPlayer";
+import DrawRectangle from "./Components/DrawRectangle";
 
 function App() {
   return (
@@ -28,6 +30,8 @@ function App() {
             <Route exact path={"/addpage"} component={AddPage}/>
             <Route exact path={"/markerlocation"} component={AddMarker}/>
             <Route exact path={"/videoarea"} component={AddVideoArea}/>
+            <Route exact path={"/videoplayer"} component={VideoPlayer}/>
+            <Route exact path={"/drawshape"} component={DrawRectangle}/>
           </Switch>
         </BrowserRouter>
     </div>

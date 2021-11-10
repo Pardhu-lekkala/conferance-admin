@@ -6,7 +6,9 @@ import edit from "../../Assets/Images/Vector.png";
 import edit2 from "../../Assets/Images/edit2.png";
 import { useHistory } from "react-router";
 
+
 const CreateNewPage=(props)=>{
+    console.log(props.location.state.id)
     const history=useHistory()
     function navigateToCustomLogin(){
         history.push("/customlogin")
@@ -17,6 +19,8 @@ const CreateNewPage=(props)=>{
             state:{
                 project:props.location.state ? props.location.state.project:null,
                 accessCode:props.location.state ? props.location.state.accessCode : null,
+                token:props.location.state.token,
+                id:props.location.state.id
             }
         })
     }
