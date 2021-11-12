@@ -27,6 +27,9 @@ const BootstrapDialogs = styled(Dialog)(({ theme }) => ({
       const [linkType,setLinkType]=React.useState("")
       const [videoLink,setVideoLink]=React.useState("")
       const [openPopUp,setOpenPopUp]=useState(true)
+      const pageId=props.pageId
+      const pageName=props.pageName
+      const token=props.token
       console.log(openPopUp)
       console.log(linkType)
       console.log(videoLink)
@@ -40,7 +43,16 @@ const BootstrapDialogs = styled(Dialog)(({ theme }) => ({
 
     function navigateVideoArea(){
       if(linkType !== "" && videoLink !== ""){
-        history.push("/videoarea") 
+        history.push({
+          pathname:'/videoarea',
+          state:{
+              pageId:pageId,
+              pageName:pageName,
+              linkType:linkType,
+              videoLink:videoLink,
+              token:token
+          }
+      })   
       }
     }
   

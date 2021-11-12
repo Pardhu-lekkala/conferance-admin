@@ -8,6 +8,7 @@ import swap from "../../Assets/Images/swap.png";
 import report from "../../Assets/Images/report_problem.png";
 import { useHistory } from "react-router";
 import axios from "axios";
+import Loader from 'react-loader-spinner';
 
 const CustomLogin=(props)=>{
     const history=useHistory();
@@ -27,7 +28,8 @@ const CustomLogin=(props)=>{
     const [transitionName,setTransitionName]=React.useState("");
     const [fileTransitionType,setFileTransitionType]=React.useState("")
     const [fileTransitionSize,setFileTransitionSize]=React.useState(15);
-    const [id,setId]=React.useState()
+    const [id,setId]=React.useState();
+    const [loader,setLoader]=React.useState(false)
 {/*******************************************API PROJECT DETAILS***************************************************/} 
     //let files={backgroundImage,backgroundVideo,transVideo}
     //console.log(files.backgroundImage,"bcccccccc")
@@ -65,14 +67,13 @@ const CustomLogin=(props)=>{
                     accessCode:props.location.state ? props.location.state.accessCode : null,
                     token:props.location.state.token,
                     image:backgroundImage,
-                    id:id
+                    projectId:id
                 }
             })
         }
     }
 
     async function postProject(){
-        navigateNewPage()
         axios({
             method: "post",
             url: "http://18.222.221.0:1337/projects",
@@ -83,6 +84,7 @@ const CustomLogin=(props)=>{
             },
           })
             .then(function (response) {
+              console.log(response)  
               console.log(response.data.id);
               setId(response.data.id)
             })
@@ -257,14 +259,21 @@ const CustomLogin=(props)=>{
                 <img src={report} alt="..." className="swap-img" style={{marginRight:"10px"}}/>
                 <p className="upload-text">Maximum upload size is 20 MB</p>
                 </div>}
-                
-
-                <div >
-                    <button className="pr-btn">Preview</button>
-                </div>
+                {id==undefined?<div>
+                    <button className="pr-btn" onClick={()=>{postProject();setLoader(true)}}>
+                    {id == undefined && loader == false?"Create":null}
+                    {id == undefined && loader == true ?
+                    <Loader type="TailSpin"
+                    color="#00BFFF"
+                    height={30}
+                    width={30}
+                    />:null}
+                    {id !== undefined && loader == true ? "Updated Successfully":null}
+                </button>
+                </div>:
                 <div>
-                    <button className={`${imgName == "" ? "cs-btn" : "cs-btn2"}`} onClick={postProject}>Customize</button>
-                </div>
+                    <button className={`${id == undefined ? "cs-btn" : "cs-btn2"}`} onClick={()=>{navigateNewPage()}}>Continue</button>
+                </div>}
                 </div>
                 <div className="btn-cont2">
                     <img src={play} alt="..." className="play-img2"/>

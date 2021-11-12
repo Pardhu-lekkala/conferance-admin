@@ -8,7 +8,7 @@ import { useHistory } from "react-router";
 
 
 const CreateNewPage=(props)=>{
-    console.log(props.location.state.id)
+    console.log(props.location.state.projectId,"mainproid")
     const history=useHistory()
     function navigateToCustomLogin(){
         history.push("/customlogin")
@@ -20,7 +20,7 @@ const CreateNewPage=(props)=>{
                 project:props.location.state ? props.location.state.project:null,
                 accessCode:props.location.state ? props.location.state.accessCode : null,
                 token:props.location.state.token,
-                id:props.location.state.id
+                projectId:props.location.state.projectId
             }
         })
     }
@@ -33,6 +33,7 @@ const CreateNewPage=(props)=>{
             <div>
             <SideBar projectName={props.location.state ? props.location.state.project:null}
             accessCode={props.location.state ? props.location.state.accessCode : null}
+            projectId={props.location.state?props.location.state.projectId:null}
             />
             </div>
             <div className="new-main-cont">

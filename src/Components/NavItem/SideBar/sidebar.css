@@ -50,10 +50,19 @@
 
 .project-name{
     position: static;
-    width: 115px;
+    width: 80px;
     height: 16px;
     left: 32px;
     top: 4px;
+    font-family: Proxima Nova;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 16px;
+    color: #002E5A;
+}
+
+.project-id{
     font-family: Proxima Nova;
     font-style: normal;
     font-weight: 600;

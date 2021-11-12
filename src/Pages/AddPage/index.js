@@ -1,4 +1,5 @@
 import React,{useRef} from "react";
+import { useEffect } from 'react';
 import NavBar from "../../Components/NavItem";
 import SideBar from "../../Components/NavItem/SideBar";
 import './page.css';
@@ -10,6 +11,8 @@ import plus from  "../../Assets/Images/plus.png";
 import VideoUploadCard from "../../Components/popup";
 import MarkerCard from "../../Components/PopUp2";
 import axios from "axios";
+import Loader from "react-loader-spinner";
+import MarkData from "../../Components/MarkData";
 
 const AddPage=(props)=>{
     const [pageName,setPageName]=useState("");
@@ -30,17 +33,37 @@ const AddPage=(props)=>{
     const [fileBckVideoSize,setFileBckVideoSize]=React.useState(15);
     const [open,setOpen]=useState(false);
     const [opens,setOpens]=useState(false);
-    const [pageId,setPageId]=useState()
-    let project=props.location.state.project;
-    let token=props.location.state.token;
-    let id=props.location.state.id;
+    const [pageId,setPageId]=useState();
+    const [loader,setLoader]=React.useState(false);
+    const [project,setProject]=React.useState("");
+    const [token,setToken]=React.useState("");
+    const [id,setId]=React.useState("");
+    const [labelSwitch,setLabel]=React.useState("LABEL-OFF")
+    let projects=props.location.state.project;
+    let tokens=props.location.state.token;
+    let ids=props.location.state.projectId;
+    let markerName=props.location.state.markerName;
+    let label=props.location.state.label;
+    let destinationType=props.location.state.destinationType;
+    let destinationLink=props.location.state.destinationLink
+    let xCoordinate=props.location.state.xCoordinate;
+    let yCoordinate=props.location.state.yCoordinate;
+    let markVideo=props.location.state.transVideo;
     console.log(id)
     console.log(pageId)
     console.log(backgroundImage)
     console.log(backgroundVideo)
     console.log(pageIcon)
     console.log(token)
-    console.log(project)
+    //console.log(project)
+    useEffect(()=>{
+        setProject(projects);
+        setToken(tokens);
+        setId(ids);
+        if (label == true){
+            setLabel("LABEL-ON")
+        }
+    },[])
     var formData=new FormData();
     formData.append('files.backgroundImage',backgroundImage); 
     formData.append('files.backgroundVideo',backgroundVideo);
@@ -130,11 +153,12 @@ const AddPage=(props)=>{
             <div className="sidebar-cont">
             <SideBar projectName={props.location.state ? props.location.state.project:null}
             accessCode={props.location.state ? props.location.state.accessCode : null}
+            projectId={props.location.state ? props.location.state.projectId:null}
             />
             </div>
             <div className="content-new-cont4">
             <div className="prev-btn-cont">
-                <button className="prev-btn2"><span><img src={edit3} alt="..." className="play-img2" onClick={postPage}/></span>Preview</button>
+                <button className="prev-btn2"><span><img src={edit3} alt="..." className="play-img2"/></span>Preview</button>
             </div>
             <div className="upload-cont2">
             <div className="up1">
@@ -196,7 +220,20 @@ const AddPage=(props)=>{
                         <p className="img-para2">PNG,JPG,GIF</p>}
                     </div>
                 </div>
+                <div style={{display:"flex",flexDirection:"row",justifyContent:"flex-end",width:"350px"}} onClick={()=>{postPage();setLoader(true)}}>
+                <button className="sv-btn-cont">
+                {pageId == undefined &&loader == false?"Save":null}
+                {pageId == undefined &&loader == true?
+                <Loader type="TailSpin"
+                    color="#00BFFF"
+                    height={30}
+                    width={30}
+                    />:null}
+                {pageId !== undefined && loader == true?"Saved":null}    
+                </button>
+                </div>
             </div>
+           
  {/**********************************************VIDEO AREA CONTAINER**************************************************************/}           
             <div className="upload-cont3">
                 <div className="tx-btn-cont">
@@ -208,8 +245,7 @@ const AddPage=(props)=>{
                         <h1 className="hd-1">LINK</h1>
                         <h1 className="hd-2">VIDEO TYPE</h1>
                         <h1 className="hd-3">LOCATION</h1>
-                    </div>
-                        
+                    </div>  
                 </div>
             </div>
 {/****************************************************MARKER CONTAINER*****************************************************/}
@@ -224,8 +260,16 @@ const AddPage=(props)=>{
                         <h1 className="mk-2">LABEL</h1>
                         <h1 className="mk-3">DESTINATION TYPE</h1>
                         <h1 className="mk-4">LOCATION</h1>
-                    </div>
-                        
+                    </div> 
+                    <MarkData 
+                        markerName={markerName} 
+                        transVideo={markVideo}
+                        label={labelSwitch} 
+                        destinationType={destinationType}
+                        destinationLink={destinationLink}
+                        xCoordinate={xCoordinate}
+                        yCoordinate={yCoordinate}
+                    />
                 </div>
             </div>                
             </div>  
@@ -233,8 +277,8 @@ const AddPage=(props)=>{
 
         
         </div>  
-        <VideoUploadCard open={open} setOpen={setOpen}/>
-        <MarkerCard opens={opens} pageId={pageId} token={token} setOpens={setOpens} />
+        <VideoUploadCard open={open} token={token} setOpen={setOpen} pageId={pageId} pageName={pageName}/>
+        <MarkerCard opens={opens} pageId={pageId} token={token} setOpens={setOpens} project={project}/>
     </>
     )
 }

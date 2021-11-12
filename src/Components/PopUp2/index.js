@@ -36,13 +36,15 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
       const {opens,setOpens} =props;
       const id=props.pageId
       const token=props.token
+      const project=props.project
       console.log(id,"pageid")
       console.log(markerVideo)
       console.log(markerInpName)
       console.log(destinationType)
       console.log(markerVideoLink)
       console.log(labelSwitch)
-
+      console.log(project,"projectscene")
+      console.log(token,'tokenscene')
     const switchToggle=()=>{
       labelSwitch ? setLabelSwitch(false) : setLabelSwitch(true)
     }  
@@ -64,7 +66,8 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
               destinationType:destinationType,
               destinationLink:markerVideoLink,
               VisibileLabel:labelSwitch,
-              TransVideo:markerVideo
+              TransVideo:videoMarkerName,
+              project:project
           }
       })  
       }

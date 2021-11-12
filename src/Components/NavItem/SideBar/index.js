@@ -8,13 +8,18 @@ import { useState } from "react";
 
 const SideBar=(props)=>{
     const [open, setOpen] = React.useState(false);
+    const projectId=props.projectId
+    console.log(projectId,"mainprojectid")
     return(
         <div className="side-main-cont">
             <div className="box-cont">
                 <div className="conf-cont">
                     <div className="cont-pro-cont">
                     <img src={arrow2} alt="..." className="arr-img" onClick={()=>{setOpen(true)}}/>
+                    <div style={{display:"flex",flexDirection:"row"}}>
                     <h1 className="project-name">{props.projectName}</h1>
+                    {projectId !== undefined?<h1 className="project-id">{`${projectId}`}</h1>:null}
+                    </div>
                     <img src={edit} alt="..." className="edit-img"/>
                     </div>
                 </div>

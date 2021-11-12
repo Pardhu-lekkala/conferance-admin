@@ -25,10 +25,20 @@ const BootstrapDialogs = styled(Dialog)(({ theme }) => ({
       const [linkType,setLinkType]=React.useState("")
       const [videoLink,setVideoLink]=React.useState("")
       const [openPopUp,setOpenPopUp]=useState(true)
+      let project=props.project;
+      let token=props.token;
+      let markerName=props.markerName;
+      let label=props.label;
+      let desType=props.destType;
+      let desLink=props.desLink;
+      let xCoordinate=props.xCor;
+      let yCoordinate=props.yCor;
+      let TransVideo=props.transVideo;
       console.log(openPopUp)
       console.log(linkType)
+      console.log(project,'popproject')
+      console.log(token,'poptoken')
       console.log(videoLink)
-
     const handleClickOpen = () => {
       setOpen(true);
     };
@@ -37,7 +47,20 @@ const BootstrapDialogs = styled(Dialog)(({ theme }) => ({
     };
 
     function navigatetoAddPage(){
-        history.push("/addpage")
+      history.push({
+        pathname:'/addpage',
+        state:{
+            project:project,
+            token:token,
+            markerName:markerName,
+            label:label,
+            destinationType:desType,
+            destinationLink:desLink,
+            xCoordinate:xCoordinate,
+            yCoordinate:yCoordinate,
+            transVideo:TransVideo
+        }
+    })  
     }
   
     return (
@@ -55,7 +78,7 @@ const BootstrapDialogs = styled(Dialog)(({ theme }) => ({
             </div>
             <div className="btn-pop-cont">
                 <button className="btn-cn" onClick={()=>setOpen(false)} onClose={handleClose}>cancel</button>
-                <button className="ad-btn">Add</button>
+                <button className="ad-btn" onClick={navigatetoAddPage}>Add</button>
             </div>
         </div>         
         </Typography>

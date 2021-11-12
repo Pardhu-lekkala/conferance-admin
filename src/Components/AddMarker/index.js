@@ -1,17 +1,25 @@
 import React, { Component } from 'react';
+import { Grid } from '@mui/material';
+import { SketchPicker } from 'react-color'
 import location from "../../Assets/Images/loc.png";
 import audit from "../../Assets/Images/ad1.jpg";
+import color from "../../Assets/Images/mark2.png";
+import grid from "../../Assets/Images/mark1.png";
 import NavBar from "../NavItem";
 import './marker.css';
 import { useState } from 'react';
 import MarkerPopUp from '../MarkerPop';
 import axios from "axios";
+import SketchExample from '../ColorPicker';
+import MarkData from '../MarkData';
+//import MarkerData from '../MarkerData';
 //const AnyReactComponent = ({ text }) => <div>{text}</div>;
 const AddMarker=(props)=>{
     const [cursor, setCursor] = useState('crosshair');
     const [open,setOpen]=useState(false);
     const [x,setx]=useState(null)
     const [y,sety]=useState(null)
+    const [hexOpen,setHexOpen]=React.useState(false)
     const TransVideo=props.location.state.TransVideo
     const token=props.location.state.token
     const markerName=props.location.state.markerName
@@ -19,6 +27,7 @@ const AddMarker=(props)=>{
     const destinationLink=props.location.state.destinationLink
     const destinationType=props.location.state.destinationType
     const VisibileLabel=props.location.state.VisibileLabel
+    const project=props.location.state.project
     //const markerPosition=(x,y)
     console.log(TransVideo,'trans video')
     console.log(token)
@@ -27,7 +36,7 @@ const AddMarker=(props)=>{
     console.log(destinationLink,'deslink')
     console.log(destinationType,'destype')
     console.log(VisibileLabel,'vslabel')
-
+    console.log(project,'markproject')
     var formData=new FormData();  
     formData.append('files.TransVideo',TransVideo)
     formData.append('data',JSON.stringify({
@@ -38,7 +47,11 @@ const AddMarker=(props)=>{
       "VisibileLabel": VisibileLabel,
       "markerPosition":`${x},${y}`
     }))
-  
+    
+    const switchHexToggle=()=>{
+      hexOpen ? setHexOpen(false) : setHexOpen(true)
+    }  
+
     function postMarker(){
       axios({
           method: "post",
@@ -65,53 +78,46 @@ const AddMarker=(props)=>{
         <>
         <div>
             <NavBar/>
-            <div style={{ backgroundImage: `url(${audit})` }} className="mark-img" onMouseUpCapture={onMouseMove} onClick={()=>setOpen(true)} onClick={postMarker}> 
-                <img src={location} style={{position:"absolute",top:`${y}px`,left:`${x}px`,height:"40px",width:"60px"}}/>     
+            <div style={{ backgroundImage: `url(${audit})` }} className="mark-img" onMouseUpCapture={onMouseMove} onClick={()=>{hexOpen?setOpen(false):setOpen(true);}}> 
+            <div style={{width:"100%",display:"flex",flexDirection:"row",justifyContent:"flex-end"}} onClick={postMarker}>
+            <button style={{height:"30px",width:"70px",margin:"15px"}}>Save</button>
+            </div>
+            <div>
+                <img src={location} style={{position:"absolute",top:`${y}px`,left:`${x}px`,height:"40px",width:"60px"}}/>  
+              </div>
+              <div style={{width:"100%",height:"150px",display:"flex",flexDirection:"row",justifyContent:"flex-end"}}>
+               {hexOpen?<div style={{marginRight:"1px",marginTop:"5.5rem",height:"380px",width:"220px",backgroundColor:"white"}} onClick={()=>{setx(47);sety(183)}}>
+                <SketchExample/>
+                </div>:null}   
+              <div style={{height:"110px",width:"40px",backgroundColor:"white",display:"flex",flexDirection:"column",alignSelf:"flex-end",marginTop:"20px"}}>
+              <img src={grid}/>
+              <hr style={{color:"black",width:"100%",fontWeight:"bold"}}/>
+              <img src={color} value={hexOpen} onClick={()=>{switchHexToggle();setx(47);sety(183)}}/>
+              </div>  
+              </div> 
             </div>
             {/*<div>
               <button onClick={postMarker}>click</button>
             </div>*/}
         </div>
-        <MarkerPopUp open={open} setOpen={setOpen} style={{position:"absolute",top:`${y}px`,left:`${x}px`}}/>
+        <MarkerPopUp 
+        open={open} 
+        project={project} 
+        token={token} 
+        markerName={markerName} 
+        label={VisibileLabel} 
+        destType={destinationType} 
+        desLink={destinationLink} 
+        xCor={x}
+        yCor={y}
+        transVideo={TransVideo}
+        setOpen={setOpen} 
+        style={{position:"absolute",top:`${y}px`,left:`${x}px`}}
+        />
+        
       </>  
     )
 }
 export default AddMarker;
 
 
-{/*const AnyReactComponent = ({  img_src }) => <div><img src={location} className="YOUR-CLASS-NAME" style={{}} /></div>;
-
-class AddMarker extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-        markers: [],
-    }
-  }
-
-  componentDidMount(){
-    // or you can set markers list somewhere else
-    // please also set your correct lat & lng
-    // you may only use 1 image for all markers, if then, remove the img_src attribute ^^
-    this.setState({
-      markers: [{lat: 59, lng: 30, img_src: location},{lat: 59, lng: 30, img_src: location},{lat: 59, lng: 30,  img_src: location}],
-    });
-  }
-
-  render() {
-    return (
-        <div style={{ backgroundImage: `url(${audit})` }} className="mark-img" >   
-            {this.state.markers.map((marker, i) =>{
-              return(
-                <AnyReactComponent
-                  lat={marker.lat}
-                  lng={marker.lng}
-                  img_src={marker.img_src}
-                />
-              )
-            })}      
-      </div>
-    );
-  }
-}
-export default AddMarker;*/}
