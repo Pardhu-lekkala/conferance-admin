@@ -1,0 +1,15 @@
+.pop-tx11{
+    font-family: Proxima Nova;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 28px;
+    color: #002E5A;
+    
+}
+
+.pg-inp-nm{
+    height: 30px;
+    width: 250px;
+    border-radius: 5px;
+}

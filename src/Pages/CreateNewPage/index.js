@@ -5,26 +5,24 @@ import "./index.css";
 import edit from "../../Assets/Images/Vector.png";
 import edit2 from "../../Assets/Images/edit2.png";
 import { useHistory } from "react-router";
+import ProjectPopUp from "../../Components/ProjectPop";
+import { useState } from "react";
 
 
 const CreateNewPage=(props)=>{
     console.log(props.location.state.projectId,"mainproid")
+    const project=props.location.state.project;
+    const accessCode=props.location.state.accessCode;
+    const token=props.location.state.token;
+    const projectId=props.location.state.projectId;
+    const [open,setOpens]=useState(false);
     const history=useHistory()
     function navigateToCustomLogin(){
         history.push("/customlogin")
     }
-    function navigateAddPage(){
-        history.push({
-            pathname:'/addpage',
-            state:{
-                project:props.location.state ? props.location.state.project:null,
-                accessCode:props.location.state ? props.location.state.accessCode : null,
-                token:props.location.state.token,
-                projectId:props.location.state.projectId
-            }
-        })
-    }
+    
     return(
+        <>
         <div className="cstm-main-cont">
             <div>
                 <NavBar/>
@@ -40,9 +38,9 @@ const CreateNewPage=(props)=>{
                 <div className="new-img-cont">
                 </div>
                 <div className="head-new-cont">
-                <h1 className="new-head">Login Page Created Successfully</h1>
+                <h1 className="new-head">Create your Pages</h1>
                 </div>
-                <button className="new-btn" onClick={navigateAddPage}>Create new page</button>
+                <button className="new-btn" onClick={()=>setOpens(true)}>Create new page</button>
                 </div>
                 <div className="btn-cont3">
                     <div >
@@ -53,7 +51,9 @@ const CreateNewPage=(props)=>{
                     </div>
                 </div>
             </div>
-        </div>  
+        </div> 
+        <ProjectPopUp open={open} setOpen={setOpens} project={project} accessCode={accessCode} token={token} projectId={projectId}/>
+        </> 
     )
 }
 export default CreateNewPage;

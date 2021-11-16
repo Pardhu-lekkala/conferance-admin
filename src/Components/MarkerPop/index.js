@@ -26,6 +26,7 @@ const BootstrapDialogs = styled(Dialog)(({ theme }) => ({
       const [videoLink,setVideoLink]=React.useState("")
       const [openPopUp,setOpenPopUp]=useState(true)
       let project=props.project;
+      let projectId=props.projectId
       let token=props.token;
       let markerName=props.markerName;
       let label=props.label;
@@ -39,6 +40,7 @@ const BootstrapDialogs = styled(Dialog)(({ theme }) => ({
       console.log(project,'popproject')
       console.log(token,'poptoken')
       console.log(videoLink)
+      console.log(projectId,"popprojid")
     const handleClickOpen = () => {
       setOpen(true);
     };
@@ -51,6 +53,7 @@ const BootstrapDialogs = styled(Dialog)(({ theme }) => ({
         pathname:'/addpage',
         state:{
             project:project,
+            projectId:projectId,
             token:token,
             markerName:markerName,
             label:label,

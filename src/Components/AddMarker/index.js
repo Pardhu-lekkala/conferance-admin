@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useRef } from 'react';
 import { Grid } from '@mui/material';
 import { SketchPicker } from 'react-color'
 import location from "../../Assets/Images/loc.png";
@@ -12,13 +12,16 @@ import MarkerPopUp from '../MarkerPop';
 import axios from "axios";
 import SketchExample from '../ColorPicker';
 import MarkData from '../MarkData';
+import { useEffect } from 'react';
 //import MarkerData from '../MarkerData';
 //const AnyReactComponent = ({ text }) => <div>{text}</div>;
 const AddMarker=(props)=>{
     const [cursor, setCursor] = useState('crosshair');
     const [open,setOpen]=useState(false);
-    const [x,setx]=useState(null)
-    const [y,sety]=useState(null)
+    const [x,setx]=useState("");
+    const [y,sety]=useState("");
+    const [prevX, setPrevX] = useState(0);
+    const [prevY,setPrevY]=useState(0);
     const [hexOpen,setHexOpen]=React.useState(false)
     const TransVideo=props.location.state.TransVideo
     const token=props.location.state.token
@@ -28,6 +31,8 @@ const AddMarker=(props)=>{
     const destinationType=props.location.state.destinationType
     const VisibileLabel=props.location.state.VisibileLabel
     const project=props.location.state.project
+    const projectId=props.location.state.projectId
+    console.log(projectId,"markproid")
     //const markerPosition=(x,y)
     console.log(TransVideo,'trans video')
     console.log(token)
@@ -45,9 +50,23 @@ const AddMarker=(props)=>{
       'destinationLink':destinationLink,
       'destinationType':'Link',
       "VisibileLabel": VisibileLabel,
-      "markerPosition":`${x},${y}`
+      "markerPosition":`${prevX},${prevY}`
     }))
-    
+
+    function usePrevious(value) {
+      const ref = useRef();
+      useEffect(() => {
+        ref.current = value;
+      });
+      return ref.current;
+    }
+    function Counter() {
+      const prevCorX = usePrevious(prevX)
+      const prevCorY=usePrevious(prevY)
+      console.log(prevCorX,"prevxcor")
+      console.log(prevCorY,"prevYcor")
+    }
+    Counter();
     const switchHexToggle=()=>{
       hexOpen ? setHexOpen(false) : setHexOpen(true)
     }  
@@ -68,19 +87,19 @@ const AddMarker=(props)=>{
           .catch(function (response) {
             console.log(response);
           });
-        }        
-    function onMouseMove(e) {
-        setx(e.screenX)
-        sety(e.screenY)
-      }   
-     console.log(x,y,"coordinates") 
+        } 
+        function onMouseMove(e) {
+            setx(e.screenX)
+            sety(e.screenY)
+          }   
+          console.log(x,y,"coordinates") 
     return(
         <>
         <div>
             <NavBar/>
-            <div style={{ backgroundImage: `url(${audit})` }} className="mark-img" onMouseUpCapture={onMouseMove} onClick={()=>{hexOpen?setOpen(false):setOpen(true);}}> 
-            <div style={{width:"100%",display:"flex",flexDirection:"row",justifyContent:"flex-end"}} onClick={postMarker}>
-            <button style={{height:"30px",width:"70px",margin:"15px"}}>Save</button>
+            <div style={{ backgroundImage: `url(${audit})` }} className="mark-img" onMouseUpCapture={onMouseMove} onClick={()=>{hexOpen?setOpen(false):setOpen(true);setPrevX(x);setPrevY(y)}}> 
+            <div style={{width:"100%",display:"flex",flexDirection:"row",justifyContent:"flex-end"}} onClick={()=>{setx(prevX);sety(prevY);}}>
+            <button style={{height:"30px",width:"70px",margin:"15px"}} onClick={postMarker}>Save</button>
             </div>
             <div>
                 <img src={location} style={{position:"absolute",top:`${y}px`,left:`${x}px`,height:"40px",width:"60px"}}/>  
@@ -103,6 +122,7 @@ const AddMarker=(props)=>{
         <MarkerPopUp 
         open={open} 
         project={project} 
+        projectId={projectId}
         token={token} 
         markerName={markerName} 
         label={VisibileLabel} 

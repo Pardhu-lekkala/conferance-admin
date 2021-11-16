@@ -31,6 +31,8 @@
     background: #C4C4C4;
 }
 
+
+
 .new-head{
     width: 229px;
     height: 20px;
@@ -42,7 +44,7 @@
     font-size: 16px;
     line-height: 20px;
     color: #5A6679;
-
+    padding-left: 100px;
 }
 
 .new-btn{

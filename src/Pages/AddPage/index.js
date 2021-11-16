@@ -13,8 +13,18 @@ import MarkerCard from "../../Components/PopUp2";
 import axios from "axios";
 import Loader from "react-loader-spinner";
 import MarkData from "../../Components/MarkData";
+import arrow2 from "../../Assets/Images/Add New.png";
+import edit from "../../Assets/Images/edit.png";
+import addimage from "../../Assets/Images/addimg.png";
+import ProjectDetails from "../../Components/DetailsCard";
+import ProjectPopUp from "../../Components/ProjectPop";
+import { useHistory } from "react-router";
+
+{/*1. Send only the files that are chnaged.
+2. Show a small imageview for page icon and page background*/}
 
 const AddPage=(props)=>{
+    const history=useHistory();
     const [pageName,setPageName]=useState("");
     const fileInputRef=useRef();
     const fileIconRef=useRef();
@@ -33,12 +43,27 @@ const AddPage=(props)=>{
     const [fileBckVideoSize,setFileBckVideoSize]=React.useState(15);
     const [open,setOpen]=useState(false);
     const [opens,setOpens]=useState(false);
+    const [opened,setOpened]=useState(false);
     const [pageId,setPageId]=useState();
     const [loader,setLoader]=React.useState(false);
     const [project,setProject]=React.useState("");
     const [token,setToken]=React.useState("");
     const [id,setId]=React.useState("");
-    const [labelSwitch,setLabel]=React.useState("LABEL-OFF")
+    const [labelSwitch,setLabel]=React.useState("LABEL-OFF");
+    const [pages,setPages]=React.useState("");
+    const [click1,setClickOne]=React.useState(false);
+    const [click2,setClickTwo]=React.useState(false);
+    const [click3,setClickThree]=React.useState(false);
+    const [click4,setClickFour]=React.useState(false);
+    const [click5,setClickFive]=React.useState(false);
+    const [pageNameData,setPageNameData]=React.useState("");
+    const [bckImg,setBckImg]=React.useState(null);
+    const [bckVideo,setBckresVideo]=React.useState(null);
+    const [pgIcon,setPgIcon]=React.useState(null);
+    const [bckImgClick,setBckImgClick]=React.useState(false);
+    const [iconClick,setIconClick]=React.useState(false);
+    const [bckVdClick,setBckVdClick]=React.useState(false);
+    
     let projects=props.location.state.project;
     let tokens=props.location.state.token;
     let ids=props.location.state.projectId;
@@ -49,12 +74,108 @@ const AddPage=(props)=>{
     let xCoordinate=props.location.state.xCoordinate;
     let yCoordinate=props.location.state.yCoordinate;
     let markVideo=props.location.state.transVideo;
+    let pageNames=props.location.state.pageName;
+    let pageLength=pages.length;
+    let currentPageId=props.location.state.pageId;
+    const [currentPagesId,setCurrentPageId]=React.useState(currentPageId)
+    console.log(currentPagesId,"crpgid")
+    //let resPageName=pages[0].pageName
+    //console.log(resPageName,'pagggggg')
+    const baseURL=`http://18.222.221.0:1337/projects/${ids}`
+    console.log(pages,"pages")
+    console.log(bckImg,"bckimgres")
+    console.log(bckVideo,"bckvdres")
+    console.log(pgIcon,"iconres")
+    console.log(pageLength,"pagelen")
     console.log(id)
     console.log(pageId)
     console.log(backgroundImage)
     console.log(backgroundVideo)
     console.log(pageIcon)
     console.log(token)
+    console.log(click1,"clkevent")
+    console.log(click2,'clkeven2')
+    console.log(click3,'clkevent3')
+    console.log(click4,'clkevent4')
+    console.log(bckImgClick,"bckingclick")
+    console.log(bckVdClick,"bckvdclick")
+    console.log(iconClick,'iconclick')
+
+    const clickToggleOne=()=>{
+        click1 ? setClickOne(false) : setClickOne(true)
+      } 
+
+    const clickToggleTwo=()=>{
+        click2 ? setClickTwo(false) : setClickTwo(true)
+      } 
+
+    const clickToggleThree=()=>{
+        click3 ? setClickThree(false) : setClickThree(true)
+      } 
+
+    const clickToggleFour=()=>{
+        click4 ? setClickFour(false) : setClickFour(true)
+      } 
+
+    const clickToggleFive=()=>{
+        click5 ? setClickFive(false) : setClickFive(true)
+      } 
+
+    function navigateCreate(){
+        history.push({
+            pathname:'/newpage',
+            state:{
+                projectId:ids,
+                project:projects,
+                token:tokens
+            }
+        })
+    }
+
+    function pageNameRes(){
+        if(click1==true){
+            setCurrentPageId(pages[0].id)
+            setPageName(pages[0].pageName)
+            setBckImg(pages[0].backgroundImage.name,"bckimgres")
+            setBckresVideo(pages[0].backgroundVideo.name)
+            setPgIcon(pages[0].pageIcon.name)
+            console.log(pageNameData,"saaaaa")
+        }
+        if (click2==true){
+            setCurrentPageId(pages[1].id)
+            setPageName(pages[1].pageName)
+            setBckImg(pages[1].backgroundImage.name,"bckimgres")
+            setBckImg(pages[1].backgroundImage.name,"bckimgres")
+            setBckresVideo(pages[1].backgroundVideo.name)
+            setPgIcon(pages[1].pageIcon.name)
+            console.log(pageNameData,"sssss")
+        }
+        if (click3==true){
+            setCurrentPageId(pages[2].id)
+            setPageName(pages[2].pageName)
+            setBckImg(pages[2].backgroundImage.name,"bckimgres")
+            setBckImg(pages[2].backgroundImage.name,"bckimgres")
+            setBckresVideo(pages[2].backgroundVideo.name)
+            setPgIcon(pages[2].pageIcon.name)
+            console.log(pageNameData)
+        }
+        if (click4==true){
+            setCurrentPageId(pages[3].id)
+            setPageName(pages[3].pageName)
+            setBckImg(pages[3].backgroundImage.name,"bckimgres")
+            setBckImg(pages[3].backgroundImage.name,"bckimgres")
+            setBckresVideo(pages[3].backgroundVideo.name)
+            setPgIcon(pages[3].pageIcon.name)
+        }
+        if (click5==true){
+            setCurrentPageId(pages[4].id)
+            setPageName(pages[4].pageName)
+            setBckImg(pages[4].backgroundImage.name,"bckimgres")
+            setBckImg(pages[4].backgroundImage.name,"bckimgres")
+            setBckresVideo(pages[4].backgroundVideo.name)
+            setPgIcon(pages[4].pageIcon.name)
+        }
+    }
     //console.log(project)
     useEffect(()=>{
         setProject(projects);
@@ -64,19 +185,30 @@ const AddPage=(props)=>{
             setLabel("LABEL-ON")
         }
     },[])
+    
     var formData=new FormData();
-    formData.append('files.backgroundImage',backgroundImage); 
-    formData.append('files.backgroundVideo',backgroundVideo);
-    formData.append('files.pageIcon',pageIcon);
+       {/*formData.append('files.backgroundImage',backgroundImage)
+        formData.append('files.backgroundVideo',backgroundVideo)
+        formData.append('files.pageIcon',pageIcon)*/}
+        if(bckImgClick==true){
+            formData.append('files.backgroundImage',backgroundImage)
+        }
+        if(bckVdClick==true){
+            formData.append('files.backgroundVideo',backgroundVideo)
+        }
+        if(iconClick==true){
+            formData.append('files.pageIcon',pageIcon)
+        }
+
     formData.append('data',JSON.stringify({
         'project':id,
         'pageName':pageName
     }))
 
-    function postPage(){
+    function updatePage(){
         axios({
-            method: "post",
-            url: "http://18.222.221.0:1337/pages",
+            method: "PUT",
+            url: `http://18.222.221.0:1337/pages/${currentPagesId}`,
             data: formData,
             headers: { 
                 "Content-Type": "multipart/form-data",
@@ -84,7 +216,7 @@ const AddPage=(props)=>{
             },
           })
             .then(function (response) {
-              console.log(response)  
+              console.log(response,"updatedresponse")  
               console.log(response.data.id);
               setPageId(response.data.id)
             })
@@ -92,7 +224,14 @@ const AddPage=(props)=>{
               console.log(response);
             });
     }
-   
+    
+    React.useEffect(() => {
+        axios.get(baseURL).then((response) => {
+          setPages(response.data.pages,"145data");
+          console.log(response.data,"response")
+        });
+      }, []);
+
     //console.log(openPopUp)
     //console.log(opens)
     console.log(pageName)
@@ -145,16 +284,50 @@ const AddPage=(props)=>{
     }   
     return(
         <>
-        <div className="cstm-main-cont2">
-            <div>
-                <NavBar/>
+            <div className="cstm-main-cont2">
+                <div>
+                    <NavBar/>
+                </div>
+                <div className="cstm-content-cont2">
+                    <div className="sidebar-cont">
+                    <div className="side-main-cont">
+                    <div className="box-cont">
+                        <div className="conf-cont">
+                            <div className="cont-pro-cont">
+                            <img src={arrow2} alt="..." className="arr-img" onClick={()=>{setOpened(true)}}/>
+                            <div style={{display:"flex",flexDirection:"row"}}>
+                            <h1 className="project-name">{projects}</h1>
+                            {ids !== undefined?<h1 className="project-id">{`${ids}`}</h1>:null}
+                            </div>
+                            <img src={edit} alt="..." className="edit-img"/>
+                            </div>
+                        </div>
+                        <div className="login-pg-cont">
+                        <h1 className="login-text">Login Page</h1>  
+                    </div>
+                    <ProjectDetails open={open} setOpen={setOpen} projectName={props.projectName} accessCode={props.accessCode}/>
+                    {pageLength>0?<div className="pg-cont" onClick={() => {clickToggleOne(true);pageNameRes();}}>
+                    <h1 className="pg-text">{pages[0].pageName}</h1>
+                    </div>:null}
+                    {pageLength>1?<div className="pg-cont" onClick={() => {clickToggleTwo(true);pageNameRes();}}>
+                    <h1 className="pg-text">{pages[1].pageName}</h1>
+                    </div>:null}
+                    {pageLength>2?<div className="pg-cont" onClick={() => {clickToggleThree(true);pageNameRes();}}>
+                    <h1 className="pg-text">{pages[2].pageName}</h1>
+                    </div>:null}
+                    {pageLength>3?<div className="pg-cont" onClick={() => {clickToggleFour(true);pageNameRes();}}>
+                    <h1 className="pg-text">{pages[3].pageName}</h1>
+                    </div>:null}
+                    {pageLength>4?<div className="pg-cont" onClick={() => {clickToggleFive(true);pageNameRes();}}>
+                    <h1 className="pg-text">{pages[4].pageName}</h1>
+                    </div>:null}
+                    <div className="create-pg-cont" onClick={navigateCreate}>
+                        <img src={addimage} alt="..." className="addimg" />
+                        <h1 className="create-text">Create a new Page</h1>
+                    </div>
+                
+                </div>
             </div>
-            <div className="cstm-content-cont2">
-            <div className="sidebar-cont">
-            <SideBar projectName={props.location.state ? props.location.state.project:null}
-            accessCode={props.location.state ? props.location.state.accessCode : null}
-            projectId={props.location.state ? props.location.state.projectId:null}
-            />
             </div>
             <div className="content-new-cont4">
             <div className="prev-btn-cont">
@@ -169,21 +342,33 @@ const AddPage=(props)=>{
                     <div className="pg2">
 {/***********************************************UPLOAD BACKGROUND IMG*******************************************************/}
                         <h1 className="bg-tx">Upload Background Image</h1>
+                        <div style={{display:"flex",flexDirection:"row"}}>
+                        <div onClick={() => {setBckImgClick(true);}}>
                         <button className="btn-up" onClick={()=>fileInputRef.current.click()}>UPLOAD</button>
+                        </div>
+                        <div style={{marginLeft:"10px"}}>
+                        <button className="btn-prev">Preview</button>
+                        </div>
+                        </div>
                         <input onChange={(e)=>handleBackground(e)} multiple={false} ref={fileInputRef} type='file' accept="image/*" hidden/>
                         {imgName !== "" && (fileType == "image/png" || fileType == "image/jpeg" || fileType == "image/gif") && fileSize <20 &&(
                         <div className="uploaded">
                         <p className="upload-text">{imgName} uploaded {fileSize} MB</p>
                         <img src={swap} alt="..." className="swap-img"/>
                         </div>)}
-                        {/* *********************CONDITION FOR FILE FORMATE******************************************/}
+                        {click1==true?<div className="uploaded">
+                        <p className="upload-text">{bckImg}</p>
+                        <img src={swap} alt="..." className="swap-img"/>
+                        </div>:null}
+
+                        {/**********************CONDITION FOR FILE FORMATE******************************************/}
                         {fileType !== "image/jpg" || fileType !== "image/png" || fileType !== "image/gif" && 
                         (<div className="uploaded-2">
                         <img src={report} alt="..." className="swap-img" style={{marginRight:"10px"}}/>    
                         <p className="upload-text">File format not supported.Please upload png,jpg,gif</p>
                         </div>)}
                          {/************************************START CONDITION*****************************************/}
-                        {imgName == "" &&
+                        {imgName == "" && click1 == false &&
                         <p className="img-para2">PNG,JPG,GIF Formats are supported</p>}
                         {/************************************SIZE CONDITION**************************************/}
                         {fileSize > 20 &&
@@ -197,30 +382,52 @@ const AddPage=(props)=>{
                 <div className="up2">
                     <div className="pg3">
                         <h1 className="bg-tx1">Upload Page Icon</h1>
+                        <div style={{display:"flex",flexDirection:"row"}}>
+                        <div onClick={() => {setIconClick(true);}}>
                         <button className="btn-up1" onClick={()=>fileIconRef.current.click()}>UPLOAD</button>
+                        </div>
+                        <div style={{marginLeft:"10px"}}>
+                        <button className="btn-prev">Preview</button>
+                        </div>
+                        </div>
                         <input onChange={(e)=>handlePageIcon(e)} multiple={false} ref={fileIconRef} type='file' accept="image/*" hidden/>
                         {iconName !== "" && (fileIconType == "image/png" || fileIconType == "image/jpeg" || fileIconType == "image/gif") && fileIconSize <20 &&(
                         <div className="uploaded">
                         <p className="upload-text">{iconName} uploaded {fileIconSize} MB</p>
                         <img src={swap} alt="..." className="swap-img" style={{marginLeft:"6rem"}}/>
                         </div>)}
+                        {click1==true?<div className="uploaded">
+                        <p className="upload-text">{pgIcon}</p>
+                        <img src={swap} alt="..." className="swap-img"/>
+                        </div>:null}
                     </div>
  {/*************************************************UPLOAD BACKGROUND VIDEO**************************************************************************/}                   
                     <div className="pg3">
                         <h1 className="bg-tx1">Upload Background Video</h1>
+                        <div style={{display:"flex",flexDirection:"row"}}>
+                        <div onClick={() => {setBckVdClick(true)}}>
                         <button className="btn-up1" onClick={()=>fileVideoRef.current.click()}>UPLOAD</button>
+                        </div>
+                        <div style={{marginLeft:"10px"}}>
+                        <button className="btn-prev">Preview</button>
+                        </div>
+                        </div>
                         <input onChange={(e)=>handleBackgroundVideo(e)} multiple={false} ref={fileVideoRef} type='file' accept="image/*" hidden/>
                         {bckVideoName !== "" && (filebckVideoType == "image/png" || filebckVideoType == "image/jpeg" || filebckVideoType == "image/gif") && fileBckVideoSize <20 &&(
                         <div className="uploaded">
                         <p className="upload-text">{bckVideoName} uploaded {fileBckVideoSize} MB</p>
                         <img src={swap} alt="..." className="swap-img" style={{marginLeft:"6rem"}}/>
                         </div>)}
+                        {click1==true?<div className="uploaded">
+                        <p className="upload-text">{bckVideo}</p>
+                        <img src={swap} alt="..." className="swap-img"/>
+                        </div>:null}
                          {/************************************START CONDITION*****************************************/}
-                         {bckVideoName == "" &&
+                         {bckVideoName == "" && click1 == false &&
                         <p className="img-para2">PNG,JPG,GIF</p>}
                     </div>
                 </div>
-                <div style={{display:"flex",flexDirection:"row",justifyContent:"flex-end",width:"350px"}} onClick={()=>{postPage();setLoader(true)}}>
+                <div style={{display:"flex",flexDirection:"row",justifyContent:"flex-end",width:"350px"}} onClick={()=>{updatePage();setLoader(true)}}>
                 <button className="sv-btn-cont">
                 {pageId == undefined &&loader == false?"Save":null}
                 {pageId == undefined &&loader == true?
@@ -278,7 +485,8 @@ const AddPage=(props)=>{
         
         </div>  
         <VideoUploadCard open={open} token={token} setOpen={setOpen} pageId={pageId} pageName={pageName}/>
-        <MarkerCard opens={opens} pageId={pageId} token={token} setOpens={setOpens} project={project}/>
+        <MarkerCard opens={opens} pageId={currentPagesId} token={token} setOpens={setOpens} project={project} projectId={ids}/>
+        <ProjectPopUp open={opened} setOpen={setOpened} project={project} projectId={ids} token={token}/>
     </>
     )
 }

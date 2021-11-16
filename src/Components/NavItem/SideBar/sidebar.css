@@ -80,8 +80,8 @@
 
 .login-pg-cont{
     display: flex;
-    flex-direction: row;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
     padding: 0px 16px;
     position: static;
     width: 250px;
@@ -93,6 +93,39 @@
     order: 1;
     flex-grow: 0;
     margin: 0px 0px;
+}
+
+.pg-cont{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px 16px;
+    position: static;
+    width: 250px;
+    height: 40px;
+    left: 0px;
+    top: 48px;
+    background:  #E7F6FF;
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+    margin: 0px 0px;
+    cursor: pointer;
+
+}
+
+.pg-text{
+    width: 70px;
+    height: 16px;
+    left: 10px;
+    top: 8px;
+    font-family: Proxima Nova;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 16px;
+    color: #002E5A;
+    margin-left: 15px;
 }
 
 .login-text{

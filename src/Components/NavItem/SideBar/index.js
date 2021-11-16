@@ -9,6 +9,8 @@ import { useState } from "react";
 const SideBar=(props)=>{
     const [open, setOpen] = React.useState(false);
     const projectId=props.projectId
+    const pages=props.pages
+    const pageLen=props.pageslen
     console.log(projectId,"mainprojectid")
     return(
         <div className="side-main-cont">
@@ -25,8 +27,24 @@ const SideBar=(props)=>{
                 </div>
                 <div className="login-pg-cont">
                 <h1 className="login-text">Login Page</h1>
+               
             </div>
             <ProjectDetails open={open} setOpen={setOpen} projectName={props.projectName} accessCode={props.accessCode}/>
+            {pageLen>0?<div className="pg-cont">
+            <h1 className="pg-text">Page1</h1>
+            </div>:null}
+            {pageLen>1?<div className="pg-cont">
+            <h1 className="pg-text">Page2</h1>
+            </div>:null}
+            {pageLen>2?<div className="pg-cont">
+            <h1 className="pg-text">Page3</h1>
+            </div>:null}
+            {pageLen>3?<div className="pg-cont">
+            <h1 className="pg-text">Page4</h1>
+            </div>:null}
+            {pageLen>4?<div className="pg-cont">
+            <h1 className="pg-text">Page5</h1>
+            </div>:null}
             <div className="create-pg-cont">
                 <img src={addimage} alt="..." className="addimg"/>
                 <h1 className="create-text">Create a new project</h1>
