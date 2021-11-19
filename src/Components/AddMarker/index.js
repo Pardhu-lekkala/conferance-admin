@@ -32,7 +32,9 @@ const AddMarker=(props)=>{
     const VisibileLabel=props.location.state.VisibileLabel
     const project=props.location.state.project
     const projectId=props.location.state.projectId
+    const markerId=props.location.state.markerId
     console.log(projectId,"markproid")
+    console.log(markerId,"markerIdput")
     //const markerPosition=(x,y)
     console.log(TransVideo,'trans video')
     console.log(token)
@@ -73,8 +75,8 @@ const AddMarker=(props)=>{
 
     function postMarker(){
       axios({
-          method: "post",
-          url: "http://18.222.221.0:1337/markers",
+          method: "PUT",
+          url: `http://18.222.221.0:1337/markers/${markerId}`,
           data: formData,
           headers: { 
               "Content-Type": "multipart/form-data",

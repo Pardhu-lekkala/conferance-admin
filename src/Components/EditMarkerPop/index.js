@@ -1,5 +1,4 @@
 import React from "react";
-import './pop2.css';
 import { Grid } from "@material-ui/core";
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
@@ -23,7 +22,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   }));
   
   
- function MarkerCard(props) {
+ function EditMarkerPop(props) {
       const history=useHistory();
       const fileMarkerVideoRef=useRef();
       const [markerVideo,setMarkerVideo]=React.useState("");
@@ -35,12 +34,12 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
       const [destinationId,setDestinationId]=React.useState("")
       const [markerVideoLink,setMarkerVideoLink]=React.useState("");
       const [labelSwitch,setLabelSwitch]=React.useState(false);
-      const [markerId,setMarkerId]=React.useState(null)
       const {opens,setOpens} =props;
       const id=props.pageId
       const token=props.token
       const project=props.project
       const projectId=props.projectId
+      const editMarkerId=props.editMarkId
       var formData=new FormData();  
       formData.append('data',JSON.stringify({
         'page':id
@@ -54,6 +53,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
       console.log(labelSwitch,"labelsw")
       console.log(project,"projectscene")
       console.log(token,'tokenscene')
+      console.log(editMarkerId,"editmarkid")
     const switchToggle=()=>{
       labelSwitch ? setLabelSwitch(false) : setLabelSwitch(true)
     }  
@@ -64,25 +64,6 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
       setOpens(false);
     };
 
-    function postMarker(){
-      axios({
-          method: "post",
-          url: "http://18.222.221.0:1337/markers",
-          data: formData,
-          headers: { 
-              "Content-Type": "multipart/form-data",
-              "Authorization":"Bearer"+" "+token,
-          },
-        })
-          .then(function (response) {
-            console.log(response.data.id,"markerId") 
-            setMarkerId(response.data.id) 
-          })
-          .catch(function (response) {
-            console.log(response);
-          });
-        } 
-    
     function navigateMarker(){
       if(markerInpName !== "" && destinationType !== "" && markerVideoLink !== "" && markerVideo !== ""){
         history.push({
@@ -97,7 +78,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
               TransVideo:videoMarkerName,
               project:project,
               projectId:projectId,
-              markerId:markerId
+              markerId:editMarkerId
           }
       })  
       }
@@ -174,9 +155,8 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
                 </div>
                 <div className="cd-btn-cont">
                    <button className="cd-btn-tx" onClick={()=>setOpens(false)} onClose={handleClose}>Cancel</button>
-                   {markerId==null?<button className="cd-btn-tx3" onClick={()=>{postMarker();}}>Confirm</button>:null}
-                    {markerId !==null?<button className={`${markerInpName !== "" && destinationType !== "" && markerVideoLink !== "" && markerVideo !== "" ?
-                     "cd-btn-tx3" : "cd-btn-tx2"}`} onClick={navigateMarker}>Set Location</button>:null}
+                    <button className={`${markerInpName !== "" && destinationType !== "" && markerVideoLink !== "" && markerVideo !== "" ?
+                     "cd-btn-tx3" : "cd-btn-tx2"}`} onClick={navigateMarker}>Set Location</button>
                 </div>
             </div>
         </div>  
@@ -191,4 +171,4 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   }
 
 
-export default MarkerCard;
+export default EditMarkerPop;

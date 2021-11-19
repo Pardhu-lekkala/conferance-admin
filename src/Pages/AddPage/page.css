@@ -1,6 +1,7 @@
 .cstm-main-cont2{
     display: flex;
     flex-direction: column;
+    height: 140vh;
 }
 
 .cstm-content-cont2{
@@ -172,7 +173,6 @@
     flex-direction: column;
     padding: 16px 24px;
     width: 1112px;
-    height: 200px;
     background: #FFFFFF;
     border: 1px solid #C4C4C4;
     border-radius: 6px;
@@ -329,4 +329,16 @@
     line-height: 20px;
     color: #002E5A;
     cursor: pointer;
+}
+
+.des-btn2{
+    height: 25px;
+    width: 80px;
+    background-color: #FCECEC;
+    border-width: 0px;
+    border-radius: 4p;
+    margin-top: 20px;
+    font-family: Proxima Nova;
+    font-weight: 700;
+    color: #FF0000;
 }
