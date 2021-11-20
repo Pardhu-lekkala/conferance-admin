@@ -53,7 +53,7 @@ const BootstrapDialogs = styled(Dialog)(({ theme }) => ({
     function deleteVideo(){
         axios({
             method: "DELETE",
-            url: `http://18.222.221.0:1337/video-areas/${deleteVideoId}`,
+            url: `https://api-meta.eskoops.com/video-areas/${deleteVideoId}`,
             headers: { 
                 "Content-Type": "multipart/form-data",
                 "Authorization":"Bearer"+" "+token,

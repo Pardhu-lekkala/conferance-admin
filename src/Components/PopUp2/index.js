@@ -67,7 +67,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     function postMarker(){
       axios({
           method: "post",
-          url: "http://18.222.221.0:1337/markers",
+          url: "https://api-meta.eskoops.com/markers",
           data: formData,
           headers: { 
               "Content-Type": "multipart/form-data",
@@ -97,7 +97,8 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
               TransVideo:videoMarkerName,
               project:project,
               projectId:projectId,
-              markerId:markerId
+              markerId:markerId,
+              destinationPage:destinationId
           }
       })  
       }

@@ -126,6 +126,8 @@
     line-height: 16px;
     color: #002E5A;
     margin-left: 15px;
+    border-width: 0px;
+    
 }
 
 .login-text{

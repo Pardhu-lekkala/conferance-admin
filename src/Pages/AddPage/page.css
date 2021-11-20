@@ -116,6 +116,23 @@
     border-width: 0px;
     cursor: pointer;
 }
+.pg-text2{
+    width: 100px;
+    height: 16px;
+    left: 10px;
+    top: 8px;
+    font-family: Proxima Nova;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 16px;
+    color: #002E5A;
+    margin-left: 15px;
+    border-width: 0px;
+    background-color: #E7F6FF;
+    cursor: pointer;
+    text-decoration: none;
+}
 
 .pr-tx{
     font-family: Proxima Nova;

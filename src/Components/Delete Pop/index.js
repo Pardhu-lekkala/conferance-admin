@@ -53,7 +53,7 @@ const BootstrapDialogs = styled(Dialog)(({ theme }) => ({
     function deleteMarker(){
         axios({
             method: "DELETE",
-            url: `http://18.222.221.0:1337/markers/${deleteId}`,
+            url: `https://api-meta.eskoops.com/markers/${deleteId}`,
             headers: { 
                 "Content-Type": "multipart/form-data",
                 "Authorization":"Bearer"+" "+token,

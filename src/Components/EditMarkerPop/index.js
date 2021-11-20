@@ -78,7 +78,9 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
               TransVideo:videoMarkerName,
               project:project,
               projectId:projectId,
-              markerId:editMarkerId
+              markerId:editMarkerId,
+              destinationPage:destinationId
+
           }
       })  
       }

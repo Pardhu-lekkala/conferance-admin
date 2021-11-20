@@ -56,10 +56,10 @@ const CustomLogin=(props)=>{
         'Description':"This is Description"
         //'files.backgroundImage':backgroundImage
     }))
-
+//&& videoName !== "" && transitionName !== "" 
     console.log(name,token,accesscode)
     function navigateNewPage(){
-        if (imgName !== "" && videoName !== "" && transitionName !== "" && id !== undefined){
+        if (imgName !== "" && id !== undefined){
             history.push({
                 pathname:'/newpage',
                 state:{
@@ -76,7 +76,7 @@ const CustomLogin=(props)=>{
     async function postProject(){
         axios({
             method: "post",
-            url: "http://18.222.221.0:1337/projects",
+            url: "https://api-meta.eskoops.com/projects",
             data: formData,
             headers: { 
                 "Content-Type": "multipart/form-data",
@@ -104,7 +104,7 @@ const CustomLogin=(props)=>{
             //"backgroundImage":files.backgroundImage
         }
         navigateNewPage()
-        let result=await fetch('http://18.222.221.0:1337/projects',{
+        let result=await fetch('https://api-meta.eskoops.com/projects',{
            method:"POST",
            body:JSON.stringify(data,files.backgroundImage),
            headers:{

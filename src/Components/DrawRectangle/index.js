@@ -13,7 +13,6 @@ class DrawRectangle extends Component{
             rotateAngle: 0
           }
         }
-      
         handleResize = (style, isShiftKey, type) => {
           let { top, left, width, height } = style
           top = Math.round(top)

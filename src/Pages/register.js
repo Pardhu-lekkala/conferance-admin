@@ -80,7 +80,7 @@ function SignUp(props) {
       let userDetails={email,username,password}
       console.log(userDetails)
 
-      let result=await fetch('http://18.222.221.0:1337/auth/local/register',{
+      let result=await fetch('https://api-meta.eskoops.com/auth/local/register',{
          method:"POST",
          body:JSON.stringify(userDetails),
          headers:{

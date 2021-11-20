@@ -55,7 +55,7 @@ const BootstrapDialogs = styled(Dialog)(({ theme }) => ({
     function postVideoArea(){
       axios({
           method: "post",
-          url: "http://18.222.221.0:1337/video-areas",
+          url: "https://api-meta.eskoops.com/video-areas",
           data: formData,
           headers: { 
               "Content-Type": "multipart/form-data",

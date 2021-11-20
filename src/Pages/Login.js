@@ -106,7 +106,7 @@ function Login(){
       if (loader==false){
         SetErrMsg("*Invalid Username or Password")
       }
-      let result=await fetch('http://18.222.221.0:1337/auth/local',{
+      let result=await fetch('https://api-meta.eskoops.com/auth/local',{
          method:"POST",
          body:JSON.stringify(userDetails),
          headers:{
@@ -187,3 +187,5 @@ function Login(){
   );
 };
 export default Login;
+
+//https://stackoverflow.com/questions/63214924/how-to-return-a-page-by-id-with-react-routing

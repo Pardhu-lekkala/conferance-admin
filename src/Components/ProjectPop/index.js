@@ -56,7 +56,7 @@ const BootstrapDialogs = styled(Dialog)(({ theme }) => ({
     function postPage(){
       axios({
           method: "post",
-          url: "http://18.222.221.0:1337/pages",
+          url: "https://api-meta.eskoops.com/pages",
           data: formData,
           headers: { 
               "Content-Type": "multipart/form-data",

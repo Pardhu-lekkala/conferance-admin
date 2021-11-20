@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import NavBar from "../NavItem";
 import areaimage from "../../Assets/Images/vdarea.png";
 import './video.css'
@@ -17,7 +17,12 @@ const AddVideoArea=(props)=>{
     const project=props.location.state.project;
     const projectId=props.location.state.projectId;
     const vdAreaId=props.location.state.vdAreaId
-    const [markUpdate,setMarkUpdate]=React.useState(false)
+    const [markUpdate,setMarkUpdate]=React.useState(false);
+    const [x,setx]=useState(null);
+    const [y,sety]=useState(null);
+    const rightCor=x+20;
+    const bottomCor=y+20;
+    console.log(x,y,rightCor,bottomCor,"vdcoordinates")
     console.log(pageId,"vdpgid")
     console.log(pageName)
     console.log(linkType)
@@ -33,7 +38,7 @@ const AddVideoArea=(props)=>{
         'page':pageId,
         'videoType':linkType,
         'videoURL':videoLink,
-        'position':"112,145,214,320"
+        'position':`${x},${y},${rightCor},${bottomCor}`
       }))
 
       function navigatetoAddPage(){
@@ -50,7 +55,7 @@ const AddVideoArea=(props)=>{
       function postVideoArea(){
         axios({
             method: "PUT",
-            url: `http://18.222.221.0:1337/video-areas/${vdAreaId}`,
+            url: `https://api-meta.eskoops.com/video-areas/${vdAreaId}`,
             data: formData,
             headers: { 
                 "Content-Type": "multipart/form-data",
@@ -64,12 +69,18 @@ const AddVideoArea=(props)=>{
             .catch(function (response) {
               console.log(response);
             });
-          }      
+          } 
+          
+          function onMouseMove(e) {
+            setx(e.screenX)
+            sety(e.screenY)
+          }   
+          console.log(x,y,"coordinates") 
       
     return(
         <div>
             <NavBar/>
-            <div style={{ backgroundImage: `url(${areaimage})` }} className="area-image">
+            <div style={{ backgroundImage: `url(${areaimage})` }} onMouseUpCapture={onMouseMove} className="area-image">
             <div style={{width:"100%",display:"flex",flexDirection:"row",justifyContent:"flex-end"}} onClick={postVideoArea}>
                 {markUpdate==false?<button className="sv-btn">Save</button>:null}
                 {markUpdate==true?<button className="sv-btn2" onClick={navigatetoAddPage}>Continue</button>:null}

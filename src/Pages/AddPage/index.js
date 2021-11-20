@@ -25,9 +25,7 @@ import DeletePop from "../../Components/Delete Pop";
 import DeleteVideoPop from "../../Components/Delete Video Pop";
 import EditMarkerPop from "../../Components/EditMarkerPop";
 import EditVideoPop from "../../Components/EditVideoPop";
-
-{/*1. Send only the files that are chnaged.
-2. Show a small imageview for page icon and page background*/}
+import {Link,BrowserRouter as Router,Route } from "react-router-dom";
 
 const AddPage=(props)=>{
     const history=useHistory();
@@ -64,6 +62,7 @@ const AddPage=(props)=>{
     const [pages,setPages]=React.useState("");
     const [markers,setMarkers]=React.useState("");
     const [videoArea,setVideoArea]=React.useState("");
+    const [click,setClick]=React.useState("");
     const [click1,setClickOne]=React.useState(false);
     const [click2,setClickTwo]=React.useState(false);
     const [click3,setClickThree]=React.useState(false);
@@ -100,7 +99,7 @@ const AddPage=(props)=>{
     console.log(currentPagesId,"crpgid")
     //let resPageName=pages[0].pageName
     //console.log(resPageName,'pagggggg')
-    const baseURL=`http://18.222.221.0:1337/projects/${ids}`
+    const baseURL=`https://api-meta.eskoops.com/projects/${ids}`
     console.log(pages,"pages")
     console.log(markers,"markersdata")
     console.log(videoArea,"vdareadata")
@@ -124,24 +123,8 @@ const AddPage=(props)=>{
     console.log(bckVdClick,"bckvdclick")
     console.log(iconClick,'iconclick')
 
-    const clickToggleOne=()=>{
-        click1 ? setClickOne(false) : setClickOne(true)
-      } 
-
-    const clickToggleTwo=()=>{
-        click2 ? setClickTwo(false) : setClickTwo(true)
-      } 
-
-    const clickToggleThree=()=>{
-        click3 ? setClickThree(false) : setClickThree(true)
-      } 
-
-    const clickToggleFour=()=>{
-        click4 ? setClickFour(false) : setClickFour(true)
-      } 
-
-    const clickToggleFive=()=>{
-        click5 ? setClickFive(false) : setClickFive(true)
+    const clickToggle=()=>{
+        click ? setClick(false) : setClick(true)
       } 
 
     function navigateCreate(){
@@ -155,60 +138,6 @@ const AddPage=(props)=>{
         })
     }
 
-    function pageNameRes(){
-        if(click1==true){
-            setCurrentPageId(pages[0].id)
-            setPageName(pages[0].pageName)
-            setBckImg(pages[0].backgroundImage.name,"bckimgres")
-            setBckresVideo(pages[0].backgroundVideo.name)
-            setPgIcon(pages[0].pageIcon.name)
-            setMarkers(pages[0].markers)
-            setVideoArea(pages[0].video_areas)
-            console.log(pageNameData,"saaaaa")
-        }
-        if (click2==true){
-            setCurrentPageId(pages[1].id)
-            setPageName(pages[1].pageName)
-            setBckImg(pages[1].backgroundImage.name,"bckimgres")
-            setBckImg(pages[1].backgroundImage.name,"bckimgres")
-            setBckresVideo(pages[1].backgroundVideo.name)
-            setPgIcon(pages[1].pageIcon.name)
-            setMarkers(pages[1].markers)
-            setVideoArea(pages[1].video_areas)
-            console.log(pageNameData,"sssss")
-        }
-        if (click3==true){
-            setCurrentPageId(pages[2].id)
-            setPageName(pages[2].pageName)
-            setBckImg(pages[2].backgroundImage.name,"bckimgres")
-            setBckImg(pages[2].backgroundImage.name,"bckimgres")
-            setBckresVideo(pages[2].backgroundVideo.name)
-            setPgIcon(pages[2].pageIcon.name)
-            setMarkers(pages[2].markers)
-            setVideoArea(pages[2].video_areas)
-            console.log(pageNameData)
-        }
-        if (click4==true){
-            setCurrentPageId(pages[3].id)
-            setPageName(pages[3].pageName)
-            setBckImg(pages[3].backgroundImage.name,"bckimgres")
-            setBckImg(pages[3].backgroundImage.name,"bckimgres")
-            setBckresVideo(pages[3].backgroundVideo.name)
-            setPgIcon(pages[3].pageIcon.name)
-            setMarkers(pages[3].markers)
-            setVideoArea(pages[3].video_areas)
-        }
-        if (click5==true){
-            setCurrentPageId(pages[4].id)
-            setPageName(pages[4].pageName)
-            setBckImg(pages[4].backgroundImage.name,"bckimgres")
-            setBckImg(pages[4].backgroundImage.name,"bckimgres")
-            setBckresVideo(pages[4].backgroundVideo.name)
-            setPgIcon(pages[4].pageIcon.name)
-            setMarkers(pages[4].markers)
-            setVideoArea(pages[4].video_areas)
-        }
-    }
     //console.log(project)
         useEffect(()=>{
             setProject(projects);
@@ -241,7 +170,7 @@ const AddPage=(props)=>{
     function updatePage(){
         axios({
             method: "PUT",
-            url: `http://18.222.221.0:1337/pages/${currentPagesId}`,
+            url: `https://api-meta.eskoops.com/pages/${currentPagesId}`,
             data: formData,
             headers: { 
                 "Content-Type": "multipart/form-data",
@@ -304,6 +233,14 @@ const AddPage=(props)=>{
         }   
     }   
     
+    function getMappedData() {
+        if (pages !== "") { 
+          return pages.map(item =>{
+              return <div>{item}</div>;
+          })
+        }
+  }
+
     const handleBackgroundVideo=(e) =>{
         let bckVideofiles=e.target.files
         setbckVideoName(bckVideofiles[0].name)
@@ -339,25 +276,31 @@ const AddPage=(props)=>{
                             <img src={edit} alt="..." className="edit-img"/>
                             </div>
                         </div>
-                        <div className="login-pg-cont">
-                        <h1 className="login-text">Login Page</h1>  
-                    </div>
+                        
                     <ProjectDetails open={open} setOpen={setOpen} projectName={props.projectName} accessCode={props.accessCode}/>
-                    {pageLength>0?<div className="pg-cont" onClick={() => {clickToggleOne(true);pageNameRes();}}>
-                    <h1 className="pg-text">{`${pages[0].pageName}-${pages[0].id}`}</h1>
+                    {pages!==""?<div>
+                        <div className="login-pg-cont">
+                            <h1 className="login-text">Login Page</h1>  
+                        </div>
+                        {pages.map((e)=>{
+                            return (
+                                <Router>
+                                <div className="pg-cont" onClick={() => {
+                                    clickToggle(true);
+                                    setCurrentPageId(e.id);
+                                    setPageName(e.pageName);
+                                    setBckImg(e.backgroundImage.name);
+                                    setBckresVideo(e.backgroundVideo.name);
+                                    setPgIcon(e.pageIcon.name);
+                                    setMarkers(e.markers);
+                                    setVideoArea(e.video_areas);
+                                    }}>
+                                <Link to={"addpage/"+e.id}><h1 className="pg-text2">{`${e.pageName}-${e.id}`}</h1></Link>
+                                </div>
+                                </Router>
+                           );})}
                     </div>:null}
-                    {pageLength>1?<div className="pg-cont" onClick={() => {clickToggleTwo(true);pageNameRes();}}>
-                    <h1 className="pg-text">{`${pages[1].pageName}-${pages[1].id}`}</h1>
-                    </div>:null}
-                    {pageLength>2?<div className="pg-cont" onClick={() => {clickToggleThree(true);pageNameRes();}}>
-                    <h1 className="pg-text">{`${pages[2].pageName}-${pages[2].id}`}</h1>
-                    </div>:null}
-                    {pageLength>3?<div className="pg-cont" onClick={() => {clickToggleFour(true);pageNameRes();}}>
-                    <h1 className="pg-text">{`${pages[3].pageName}-${pages[3].id}`}</h1>
-                    </div>:null}
-                    {pageLength>4?<div className="pg-cont" onClick={() => {clickToggleFive(true);pageNameRes();}}>
-                    <h1 className="pg-text">{`${pages[4].pageName}-${pages[4].id}`}</h1>
-                    </div>:null}
+                   
                     <div className="create-pg-cont" onClick={navigateCreate}>
                         <img src={addimage} alt="..." className="addimg" />
                         <h1 className="create-text">Create a new Page</h1>
@@ -393,7 +336,7 @@ const AddPage=(props)=>{
                         <p className="upload-text">{imgName} uploaded {fileSize} MB</p>
                         <img src={swap} alt="..." className="swap-img"/>
                         </div>)}
-                        {click1==true?<div className="uploaded">
+                        {bckImg!==null?<div className="uploaded">
                         <p className="upload-text">{bckImg}</p>
                         <img src={swap} alt="..." className="swap-img"/>
                         </div>:null}
@@ -405,7 +348,7 @@ const AddPage=(props)=>{
                         <p className="upload-text">File format not supported.Please upload png,jpg,gif</p>
                         </div>)}
                          {/************************************START CONDITION*****************************************/}
-                        {imgName == "" && click1 == false &&
+                        {imgName == "" && bckImg==null &&
                         <p className="img-para2">PNG,JPG,GIF Formats are supported</p>}
                         {/************************************SIZE CONDITION**************************************/}
                         {fileSize > 20 &&
@@ -433,7 +376,7 @@ const AddPage=(props)=>{
                         <p className="upload-text">{iconName} uploaded {fileIconSize} MB</p>
                         <img src={swap} alt="..." className="swap-img" style={{marginLeft:"6rem"}}/>
                         </div>)}
-                        {click1==true?<div className="uploaded">
+                        {pgIcon!==null?<div className="uploaded">
                         <p className="upload-text">{pgIcon}</p>
                         <img src={swap} alt="..." className="swap-img"/>
                         </div>:null}
@@ -455,12 +398,12 @@ const AddPage=(props)=>{
                         <p className="upload-text">{bckVideoName} uploaded {fileBckVideoSize} MB</p>
                         <img src={swap} alt="..." className="swap-img" style={{marginLeft:"6rem"}}/>
                         </div>)}
-                        {click1==true?<div className="uploaded">
+                        {bckVideo!==null?<div className="uploaded">
                         <p className="upload-text">{bckVideo}</p>
                         <img src={swap} alt="..." className="swap-img"/>
                         </div>:null}
                          {/************************************START CONDITION*****************************************/}
-                         {bckVideoName == "" && click1 == false &&
+                         {bckVideoName == "" && bckVideo==null &&
                         <p className="img-para2">PNG,JPG,GIF</p>}
                     </div>
                 </div>
@@ -489,92 +432,28 @@ const AddPage=(props)=>{
                         <h1 className="hd-1">LINK</h1>
                         <h1 className="hd-2">VIDEO TYPE</h1>
                         <h1 className="hd-3">LOCATION</h1>
-                    </div> 
-                    {vdLength>=1?<div className="data-container">
+                    </div>
+                    {videoArea!==""?<div>
+                        {videoArea.map((e)=>{
+                            return (
+                                <div className="data-container">
                                 <div style={{width:"570px"}}>
-                                <p className="data1">{videoArea[0].videoURL}</p>
+                                <p className="data1">{e.videoURL}</p>
                                 </div>
                                 <div style={{width:"220px"}}>
-                                    <button className="des-btn2">{videoArea[0].videoType}</button>    
+                                    <button className="des-btn2">{e.videoType}</button>    
                                 </div>
                                 <div className="coor-cont">
                                     <img src={loc} className="loc-img"/>
-                                    <p className="data4">{videoArea[0].position}</p>
+                                    <p className="data4">{e.position}</p>
                                 </div>
                                 <div className="del-cont">
-                                    <img src={edit} className="ed-img" onClick={()=>{setopenV(true);setEditVideoId(videoArea[0].id)}}/>
-                                    <img src={del} className="del-img" onClick={()=>{setOpenVd(true);setDeleteVideoId(videoArea[0].id)}}/>
+                                    <img src={edit} className="ed-img" onClick={()=>{setopenV(true);setEditVideoId(e.id)}}/>
+                                    <img src={del} className="del-img" onClick={()=>{setOpenVd(true);setDeleteVideoId(e.id)}}/>
                                 </div>
-                            </div>:null} 
-
-                    {vdLength>=2?<div className="data-container">
-                                <div style={{width:"570px"}}>
-                                <p className="data1">{videoArea[1].videoURL}</p>
-                                </div>
-                                <div style={{width:"220px"}}>
-                                    <button className="des-btn2">{videoArea[1].videoType}</button>    
-                                </div>
-                                <div className="coor-cont">
-                                    <img src={loc} className="loc-img"/>
-                                    <p className="data4">{videoArea[1].position}</p>
-                                </div>
-                                <div className="del-cont">
-                                    <img src={edit} className="ed-img" onClick={()=>{setopenV(true);setEditVideoId(videoArea[1].id)}}/>
-                                    <img src={del} className="del-img" onClick={()=>{setOpenVd(true);setDeleteVideoId(videoArea[1].id)}}/>
-                                </div>
-                            </div>:null} 
-                    
-                    {vdLength>=3?<div className="data-container">
-                                <div style={{width:"570px"}}>
-                                <p className="data1">{videoArea[2].videoURL}</p>
-                                </div>
-                                <div style={{width:"220px"}}>
-                                    <button className="des-btn2">{videoArea[2].videoType}</button>    
-                                </div>
-                                <div className="coor-cont">
-                                    <img src={loc} className="loc-img"/>
-                                    <p className="data4">{videoArea[2].position}</p>
-                                </div>
-                                <div className="del-cont">
-                                    <img src={edit} className="ed-img" onClick={()=>{setopenV(true);setEditVideoId(videoArea[2].id)}}/>
-                                    <img src={del} className="del-img" onClick={()=>{setOpenVd(true);setDeleteVideoId(videoArea[2].id)}}/>
-                                </div>
-                            </div>:null} 
-
-                    {vdLength>=4?<div className="data-container">
-                                <div style={{width:"570px"}}>
-                                <p className="data1">{videoArea[3].videoURL}</p>
-                                </div>
-                                <div style={{width:"220px"}}>
-                                    <button className="des-btn2">{videoArea[3].videoType}</button>    
-                                </div>
-                                <div className="coor-cont">
-                                    <img src={loc} className="loc-img"/>
-                                    <p className="data4">{videoArea[3].position}</p>
-                                </div>
-                                <div className="del-cont">
-                                    <img src={edit} className="ed-img" onClick={()=>{setopenV(true);setEditVideoId(videoArea[3].id)}}/>
-                                    <img src={del} className="del-img" onClick={()=>{setOpenVd(true);setDeleteVideoId(videoArea[3].id)}}/>
-                                </div>
-                            </div>:null} 
-
-                    {vdLength>=5?<div className="data-container">
-                                <div style={{width:"570px"}}>
-                                <p className="data1">{videoArea[4].videoURL}</p>
-                                </div>
-                                <div style={{width:"220px"}}>
-                                    <button className="des-btn2">{videoArea[4].videoType}</button>    
-                                </div>
-                                <div className="coor-cont">
-                                    <img src={loc} className="loc-img"/>
-                                    <p className="data4">{videoArea[4].position}</p>
-                                </div>
-                                <div className="del-cont">
-                                    <img src={edit} className="ed-img" onClick={()=>{setopenV(true);setEditVideoId(videoArea[4].id)}}/>
-                                    <img src={del} className="del-img" onClick={()=>{setOpenVd(true);setDeleteVideoId(videoArea[4].id)}}/>
-                                </div>
-                            </div>:null} 
-
+                            </div>        
+                           );})}
+                    </div>:null}
 
                 </div>
             </div>
@@ -591,117 +470,34 @@ const AddPage=(props)=>{
                         <h1 className="mk-3">DESTINATION TYPE</h1>
                         <h1 className="mk-4">LOCATION</h1>
                     </div> 
-                    {/*<MarkData 
-                        markerName={markerName} 
-                        transVideo={markVideo}
-                        label={labelSwitch} 
-                        destinationType={destinationType}
-                        destinationLink={destinationLink}
-                        xCoordinate={xCoordinate}
-                        yCoordinate={yCoordinate}
-                        pageLen={pageLength}
-                    />*/}
-                    {markerLength>=1?<div className="data-container">
-                                <p className="data1">{markers[0].markerName}</p>
+                    {console.log(markers,"ppppppppp")}
+                    {markers!==""?<div>
+                        {markers.map((e)=>{
+                            return (
+                                <div className="data-container">
+                                <p className="data1">{e.markerName}</p>
                                 <div style={{width:"220px"}}>
-                                    <button className="labelOn">{`${markers[0].VisibileLabel?"LABEL-ON":"LABEL-OFF"}`}</button>
+                                    <button className="labelOn">{`${e.VisibileLabel?"LABEL-ON":"LABEL-OFF"}`}</button>
                                 </div>
                                 <div style={{width:"240px",marginLeft:"15px"}}>
                                     <button className="des-btn">Link</button>    
-                                <p className="data3">{markers[0].destinationLink}</p>
+                                <p className="data3">{e.destinationLink}</p>
                                 </div>
                                 <div className="coor-cont">
                                     <img src={loc} className="loc-img"/>
-                                    <p className="data4">{markers[0].markerPosition}</p>
+                                    <p className="data4">{e.markerPosition}</p>
                                 </div>
                                 <div className="del-cont">
-                                    <img src={edit} className="ed-img" onClick={()=>{setOpenM(true);setEditMarkerId(markers[0].id)}}/>
-                                    <img src={del} className="del-img" onClick={()=>{setOpenD(true);setDeleteMarkerId(markers[0].id)}}/>
+                                    <img src={edit} className="ed-img" onClick={()=>{setOpenM(true);setEditMarkerId(e.id)}}/>
+                                    <img src={del} className="del-img" onClick={()=>{setOpenD(true);setDeleteMarkerId(e.id)}}/>
                                 </div>
-                            </div>:null}
-                    
-                            {markerLength>=2?<div className="data-container">
-                                <p className="data1">{markers[1].markerName}</p>
-                                <div style={{width:"220px"}}>
-                                    <button className="labelOn">{`${markers[1].VisibileLabel?"LABEL-ON":"LABEL-OFF"}`}</button>
-                                </div>
-                                <div style={{width:"240px",marginLeft:"15px"}}>
-                                    <button className="des-btn">Link</button>    
-                                <p className="data3">{markers[1].destinationLink}</p>
-                                </div>
-                                <div className="coor-cont">
-                                    <img src={loc} className="loc-img"/>
-                                    <p className="data4">{markers[1].markerPosition}</p>
-                                </div>
-                                <div className="del-cont">
-                                    <img src={edit} className="ed-img" onClick={()=>{setOpenM(true);setEditMarkerId(markers[1].id)}}/>
-                                    <img src={del} className="del-img" onClick={()=>{setOpenD(true);setDeleteMarkerId(markers[1].id)}}/>
-                                </div>
-                            </div>:null}
-
-                            {markerLength>=3?<div className="data-container">
-                                <p className="data1">{markers[2].markerName}</p>
-                                <div style={{width:"220px"}}>
-                                    <button className="labelOn">{`${markers[2].VisibileLabel?"LABEL-ON":"LABEL-OFF"}`}</button>
-                                </div>
-                                <div style={{width:"240px",marginLeft:"15px"}}>
-                                    <button className="des-btn">Link</button>    
-                                <p className="data3">{markers[2].destinationLink}</p>
-                                </div>
-                                <div className="coor-cont">
-                                    <img src={loc} className="loc-img"/>
-                                    <p className="data4">{markers[2].markerPosition}</p>
-                                </div>
-                                <div className="del-cont">
-                                    <img src={edit} className="ed-img" onClick={()=>{setOpenM(true);setEditMarkerId(markers[2].id)}}/>
-                                    <img src={del} className="del-img" onClick={()=>{setOpenD(true);setDeleteMarkerId(markers[2].id)}}/>
-                                </div>
-                            </div>:null}
-
-                            {markerLength>=4?<div className="data-container">
-                                <p className="data1">{markers[3].markerName}</p>
-                                <div style={{width:"220px"}}>
-                                    <button className="labelOn">{`${markers[3].VisibileLabel?"LABEL-ON":"LABEL-OFF"}`}</button>
-                                </div>
-                                <div style={{width:"240px",marginLeft:"15px"}}>
-                                    <button className="des-btn">Link</button>    
-                                <p className="data3">{markers[3].destinationLink}</p>
-                                </div>
-                                <div className="coor-cont">
-                                    <img src={loc} className="loc-img"/>
-                                    <p className="data4">{markers[3].markerPosition}</p>
-                                </div>
-                                <div className="del-cont">
-                                    <img src={edit} className="ed-img" onClick={()=>{setOpenM(true);setEditMarkerId(markers[3].id)}}/>
-                                    <img src={del} className="del-img" onClick={()=>{setOpenD(true);setDeleteMarkerId(markers[3].id)}}/>
-                                </div>
-                            </div>:null}
-
-                            {markerLength>=5?<div className="data-container">
-                                <p className="data1">{markers[4].markerName}</p>
-                                <div style={{width:"220px"}}>
-                                    <button className="labelOn">{`${markers[4].VisibileLabel?"LABEL-ON":"LABEL-OFF"}`}</button>
-                                </div>
-                                <div style={{width:"240px",marginLeft:"15px"}}>
-                                    <button className="des-btn">Link</button>    
-                                <p className="data3">{markers[4].destinationLink}</p>
-                                </div>
-                                <div className="coor-cont">
-                                    <img src={loc} className="loc-img"/>
-                                    <p className="data4">{markers[4].markerPosition}</p>
-                                </div>
-                                <div className="del-cont">
-                                    <img src={edit} className="ed-img" onClick={()=>{setOpenM(true);setEditMarkerId(markers[4].id)}}/>
-                                    <img src={del} className="del-img" onClick={()=>{setOpenD(true);setDeleteMarkerId(markers[4].id)}}/>
-                                </div>
-                            </div>:null}
-
-                </div>
+                            </div>     
+                           );})}
+                    </div>:null}
+                   </div> 
             </div>                
             </div>  
             </div>
-
-        
         </div>  
         <VideoUploadCard open={opend} token={token} setOpen={setopend} pageId={currentPagesId} pageName={pageName} project={project} projectId={ids}/>
         <MarkerCard opens={opens} pageId={currentPagesId} token={token} setOpens={setOpens} project={project} projectId={ids}/>

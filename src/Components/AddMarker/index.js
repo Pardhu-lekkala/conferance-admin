@@ -33,6 +33,7 @@ const AddMarker=(props)=>{
     const project=props.location.state.project
     const projectId=props.location.state.projectId
     const markerId=props.location.state.markerId
+    const destinationPageId=props.location.state.destinationPage
     console.log(projectId,"markproid")
     console.log(markerId,"markerIdput")
     //const markerPosition=(x,y)
@@ -52,6 +53,7 @@ const AddMarker=(props)=>{
       'destinationLink':destinationLink,
       'destinationType':'Link',
       "VisibileLabel": VisibileLabel,
+      "destinationPage":destinationPageId,
       "markerPosition":`${prevX},${prevY}`
     }))
 
@@ -76,7 +78,7 @@ const AddMarker=(props)=>{
     function postMarker(){
       axios({
           method: "PUT",
-          url: `http://18.222.221.0:1337/markers/${markerId}`,
+          url: `https://api-meta.eskoops.com/markers/${markerId}`,
           data: formData,
           headers: { 
               "Content-Type": "multipart/form-data",
