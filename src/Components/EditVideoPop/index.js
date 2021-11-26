@@ -34,6 +34,7 @@ const BootstrapDialogs = styled(Dialog)(({ theme }) => ({
       const project=props.project
       const projectId=props.projectId
       const editVideoId=props.editVideoId
+      const vdImgUrl=props.vdImgUrl
       var formData=new FormData();  
       formData.append('data',JSON.stringify({
         'page':pageId
@@ -65,7 +66,8 @@ const BootstrapDialogs = styled(Dialog)(({ theme }) => ({
               token:token,
               project:project,
               projectId:projectId,
-              vdAreaId:editVideoId
+              vdAreaId:editVideoId,
+              vdImgUrl:vdImgUrl
           }
       })   
       }

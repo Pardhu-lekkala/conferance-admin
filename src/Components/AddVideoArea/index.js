@@ -16,7 +16,9 @@ const AddVideoArea=(props)=>{
     const token=props.location.state.token;
     const project=props.location.state.project;
     const projectId=props.location.state.projectId;
-    const vdAreaId=props.location.state.vdAreaId
+    const vdAreaId=props.location.state.vdAreaId;
+    const vdImgUrl=props.location.state.vdImgUrl;
+    const bckImgUrl=props.location.state.bckImgUrl;
     const [markUpdate,setMarkUpdate]=React.useState(false);
     const [x,setx]=useState(null);
     const [y,sety]=useState(null);
@@ -32,6 +34,7 @@ const AddVideoArea=(props)=>{
     console.log(projectId,"projid")
     console.log(vdAreaId,"vdAreaId")
     console.log(markUpdate,"markupdate")
+    console.log(vdImgUrl,"VDIMGURL")
     var formData=new FormData();
     formData.append('data',JSON.stringify({
         'name':pageName,
@@ -48,6 +51,8 @@ const AddVideoArea=(props)=>{
               project:project,
               projectId:projectId,
               token:token,
+              vdImgUrl:vdImgUrl,
+              bckImgUrl:bckImgUrl
           }
       })  
     }
@@ -55,7 +60,7 @@ const AddVideoArea=(props)=>{
       function postVideoArea(){
         axios({
             method: "PUT",
-            url: `https://api-meta.eskoops.com/video-areas/${vdAreaId}`,
+            url: `http://44.195.32.62:1337/video-areas/${vdAreaId}`,
             data: formData,
             headers: { 
                 "Content-Type": "multipart/form-data",
@@ -80,7 +85,7 @@ const AddVideoArea=(props)=>{
     return(
         <div>
             <NavBar/>
-            <div style={{ backgroundImage: `url(${areaimage})` }} onMouseUpCapture={onMouseMove} className="area-image">
+            <div style={{ backgroundImage: `url(${vdImgUrl})` }} onMouseUpCapture={onMouseMove} className="area-image">
             <div style={{width:"100%",display:"flex",flexDirection:"row",justifyContent:"flex-end"}} onClick={postVideoArea}>
                 {markUpdate==false?<button className="sv-btn">Save</button>:null}
                 {markUpdate==true?<button className="sv-btn2" onClick={navigatetoAddPage}>Continue</button>:null}

@@ -20,16 +20,20 @@ import edit from "../../Assets/Images/edit.png";
 import addimage from "../../Assets/Images/addimg.png";
 import ProjectDetails from "../../Components/DetailsCard";
 import ProjectPopUp from "../../Components/ProjectPop";
-import { useHistory } from "react-router";
+import { useHistory,useLocation,useParams} from "react-router";
 import DeletePop from "../../Components/Delete Pop";
 import DeleteVideoPop from "../../Components/Delete Video Pop";
 import EditMarkerPop from "../../Components/EditMarkerPop";
 import EditVideoPop from "../../Components/EditVideoPop";
 import {Link,BrowserRouter as Router,Route } from "react-router-dom";
+import { CountertopsOutlined } from "@mui/icons-material";
 
 const AddPage=(props)=>{
+    const params=useParams();
     const history=useHistory();
-    const [pageName,setPageName]=useState("");
+    const location=useLocation();
+    const search=useLocation().search
+    const urlId=new URLSearchParams(search).get('page')
     const fileInputRef=useRef();
     const fileIconRef=useRef();
     const fileVideoRef=useRef();
@@ -43,6 +47,10 @@ const AddPage=(props)=>{
     const [fileIconSize,setFileIconSize]=React.useState(15);
     const [backgroundVideo,setBckVideo]=React.useState("");
     const [bckVideoName,setbckVideoName]=React.useState("");
+    const [vdImgUrl,setVdImgUrl]=React.useState("");
+    const [bckImgUrl,setBckImgUrl]=React.useState("");
+    const [resBckImgUrl,setResBckImgUrl]=React.useState("");
+    const [resVdImgUrl,setResVdImgUrl]=React.useState("");
     const [filebckVideoType,setFileBckVideoType]=React.useState("")
     const [fileBckVideoSize,setFileBckVideoSize]=React.useState(15);
     const [open,setOpen]=useState(false);
@@ -63,11 +71,7 @@ const AddPage=(props)=>{
     const [markers,setMarkers]=React.useState("");
     const [videoArea,setVideoArea]=React.useState("");
     const [click,setClick]=React.useState("");
-    const [click1,setClickOne]=React.useState(false);
-    const [click2,setClickTwo]=React.useState(false);
-    const [click3,setClickThree]=React.useState(false);
-    const [click4,setClickFour]=React.useState(false);
-    const [click5,setClickFive]=React.useState(false);
+    const [delete1,setDelete]=React.useState(false);
     const [pageNameData,setPageNameData]=React.useState("");
     const [bckImg,setBckImg]=React.useState(null);
     const [bckVideo,setBckresVideo]=React.useState(null);
@@ -91,15 +95,19 @@ const AddPage=(props)=>{
     let yCoordinate=props.location.state.yCoordinate;
     let markVideo=props.location.state.transVideo;
     let pageNames=props.location.state.pageName;
+    let url=props.location.state.bckImgUrl
+    let vdUrl=props.location.state.vdImgUrl
     let pageLength=pages.length;
     let markerLength=markers.length;
     let vdLength=videoArea.length;
     let currentPageId=props.location.state.pageId;
     const [currentPagesId,setCurrentPageId]=React.useState(currentPageId)
+    const [pageName,setPageName]=useState(pageNames);
     console.log(currentPagesId,"crpgid")
+    console.log(url,"URLBACK")
     //let resPageName=pages[0].pageName
     //console.log(resPageName,'pagggggg')
-    const baseURL=`https://api-meta.eskoops.com/projects/${ids}`
+    const baseURL=`http://44.195.32.62:1337/projects/${ids}`
     console.log(pages,"pages")
     console.log(markers,"markersdata")
     console.log(videoArea,"vdareadata")
@@ -115,13 +123,18 @@ const AddPage=(props)=>{
     console.log(backgroundVideo)
     console.log(pageIcon)
     console.log(token)
-    console.log(click1,"clkevent")
-    console.log(click2,'clkeven2')
-    console.log(click3,'clkevent3')
-    console.log(click4,'clkevent4')
     console.log(bckImgClick,"bckingclick")
     console.log(bckVdClick,"bckvdclick")
     console.log(iconClick,'iconclick')
+    console.log(bckImgUrl,"bckimgurl")
+    console.log(vdImgUrl,"vdimgurl")
+    console.log(resBckImgUrl,"responsebckimgurl")
+    console.log(resVdImgUrl,"responsevdimgurl")
+    console.log(location,"locationres")
+    console.log(urlId,"URLID");
+    console.log(params,"PARAMETERS")
+
+    
 
     const clickToggle=()=>{
         click ? setClick(false) : setClick(true)
@@ -137,6 +150,20 @@ const AddPage=(props)=>{
             }
         })
     }
+
+    function currentUrl(page){
+            history.push({
+                pathname: "/addpage",
+                search: `?${ids}page=${page}`,
+                hash: "",
+                state:{
+                    projectId:ids,
+                    project:projects,
+                    token:tokens
+                }
+            });
+        }
+    
 
     //console.log(project)
         useEffect(()=>{
@@ -170,7 +197,7 @@ const AddPage=(props)=>{
     function updatePage(){
         axios({
             method: "PUT",
-            url: `https://api-meta.eskoops.com/pages/${currentPagesId}`,
+            url: `http://44.195.32.62:1337/pages/${currentPagesId}`,
             data: formData,
             headers: { 
                 "Content-Type": "multipart/form-data",
@@ -190,14 +217,12 @@ const AddPage=(props)=>{
     React.useEffect(() => {
         axios.get(baseURL).then((response) => {
           setPages(response.data.pages,"145data");
+          setBckImgUrl(url)
+          setVdImgUrl(vdUrl)
           console.log(response.data,"response")
         });
       }, []);
     
-
-    
-
-
     //console.log(openPopUp)
     //console.log(opens)
     console.log(pageName)
@@ -213,7 +238,7 @@ const AddPage=(props)=>{
         reader.readAsDataURL(files[0])
         reader.onload=(e)=>{
             console.log("img data",e.target.result)
-            //setImage(e.target.result)
+            setBckImgUrl(e.target.result)
         }   
     }
     const handlePageIcon=(e) =>{
@@ -253,7 +278,7 @@ const AddPage=(props)=>{
         readTrans.readAsDataURL(bckVideofiles[0])
         readTrans.onload=(e)=>{
             console.log("img data",e.target.result)
-            //setBckVideo(e.target.result)
+            setVdImgUrl(e.target.result)
         }   
     }   
     return(
@@ -294,8 +319,9 @@ const AddPage=(props)=>{
                                     setPgIcon(e.pageIcon.name);
                                     setMarkers(e.markers);
                                     setVideoArea(e.video_areas);
+                                    currentUrl(e.id)
                                     }}>
-                                <Link to={"addpage/"+e.id}><h1 className="pg-text2">{`${e.pageName}-${e.id}`}</h1></Link>
+                                <h1 className="pg-text2">{`${e.pageName}-${e.id}`}</h1>
                                 </div>
                                 </Router>
                            );})}
@@ -336,7 +362,7 @@ const AddPage=(props)=>{
                         <p className="upload-text">{imgName} uploaded {fileSize} MB</p>
                         <img src={swap} alt="..." className="swap-img"/>
                         </div>)}
-                        {bckImg!==null?<div className="uploaded">
+                        {bckImg!==null && bckImgClick==false ?<div className="uploaded">
                         <p className="upload-text">{bckImg}</p>
                         <img src={swap} alt="..." className="swap-img"/>
                         </div>:null}
@@ -376,7 +402,7 @@ const AddPage=(props)=>{
                         <p className="upload-text">{iconName} uploaded {fileIconSize} MB</p>
                         <img src={swap} alt="..." className="swap-img" style={{marginLeft:"6rem"}}/>
                         </div>)}
-                        {pgIcon!==null?<div className="uploaded">
+                        {pgIcon!==null && iconClick==false?<div className="uploaded">
                         <p className="upload-text">{pgIcon}</p>
                         <img src={swap} alt="..." className="swap-img"/>
                         </div>:null}
@@ -398,7 +424,7 @@ const AddPage=(props)=>{
                         <p className="upload-text">{bckVideoName} uploaded {fileBckVideoSize} MB</p>
                         <img src={swap} alt="..." className="swap-img" style={{marginLeft:"6rem"}}/>
                         </div>)}
-                        {bckVideo!==null?<div className="uploaded">
+                        {bckVideo!==null && bckVdClick==false?<div className="uploaded">
                         <p className="upload-text">{bckVideo}</p>
                         <img src={swap} alt="..." className="swap-img"/>
                         </div>:null}
@@ -491,7 +517,7 @@ const AddPage=(props)=>{
                                     <img src={edit} className="ed-img" onClick={()=>{setOpenM(true);setEditMarkerId(e.id)}}/>
                                     <img src={del} className="del-img" onClick={()=>{setOpenD(true);setDeleteMarkerId(e.id)}}/>
                                 </div>
-                            </div>     
+                            </div>
                            );})}
                     </div>:null}
                    </div> 
@@ -499,13 +525,13 @@ const AddPage=(props)=>{
             </div>  
             </div>
         </div>  
-        <VideoUploadCard open={opend} token={token} setOpen={setopend} pageId={currentPagesId} pageName={pageName} project={project} projectId={ids}/>
-        <MarkerCard opens={opens} pageId={currentPagesId} token={token} setOpens={setOpens} project={project} projectId={ids}/>
+        <VideoUploadCard open={opend} vdImgUrl={vdImgUrl} bckImgUrl={bckImgUrl} token={token} setOpen={setopend} pageId={currentPagesId} pageName={pageName} project={project} projectId={ids}/>
+        <MarkerCard opens={opens} bckImgUrl={bckImgUrl} vdImgUrl={vdImgUrl} pageId={currentPagesId} token={token} setOpens={setOpens} project={project} projectId={ids}/>
         <ProjectPopUp open={opened} setOpen={setOpened} project={project} projectId={ids} token={token}/>
         <DeletePop open={openD} setOpen={setOpenD} token={token} pageId={currentPagesId} pageName={pageName} project={project} projectId={ids} deleteId={deleteMarkerId}/>
         <DeleteVideoPop open={openVd} setOpen={setOpenVd} token={token} pageId={currentPagesId} pageName={pageName} project={project} projectId={ids} deleteVideoId={deleteVideoId}/>
-        <EditMarkerPop opens={openM} pageId={currentPagesId} editMarkId={editMarkerId} token={token} setOpens={setOpenM} project={project} projectId={ids}/>
-        <EditVideoPop open={openV} token={token} setOpen={setopenV} pageId={currentPagesId} editVideoId={editVideoId} pageName={pageName} project={project} projectId={ids}/>
+        <EditMarkerPop opens={openM} bckImgUrl={bckImgUrl} pageId={currentPagesId} editMarkId={editMarkerId} token={token} setOpens={setOpenM} project={project} projectId={ids}/>
+        <EditVideoPop open={openV} token={token} vdImgUrl={vdImgUrl} setOpen={setopenV} pageId={currentPagesId} editVideoId={editVideoId} pageName={pageName} project={project} projectId={ids}/>
     </>
     )
 }

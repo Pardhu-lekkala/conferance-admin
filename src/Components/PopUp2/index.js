@@ -31,7 +31,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
       const [fileMarkerVideoType,setFileMarkerVideoType]=React.useState("");
       const [fileMarkerVideoSize,setFileMarkerVideoSize]=React.useState(15);
       const [markerInpName,setMarkerInpName]=React.useState("");
-      const [destinationType,setDestinationType]= React.useState("");
+      const [destinationType,setDestinationType]= React.useState("Web Link");
       const [destinationId,setDestinationId]=React.useState("")
       const [markerVideoLink,setMarkerVideoLink]=React.useState("");
       const [labelSwitch,setLabelSwitch]=React.useState(false);
@@ -41,6 +41,8 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
       const token=props.token
       const project=props.project
       const projectId=props.projectId
+      const bckImgUrl=props.bckImgUrl
+      const vdImgUrl=props.vdImgUrl
       var formData=new FormData();  
       formData.append('data',JSON.stringify({
         'page':id
@@ -54,6 +56,8 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
       console.log(labelSwitch,"labelsw")
       console.log(project,"projectscene")
       console.log(token,'tokenscene')
+      console.log(destinationId,"desid")
+      console.log(bckImgUrl,"bckIMGURL")
     const switchToggle=()=>{
       labelSwitch ? setLabelSwitch(false) : setLabelSwitch(true)
     }  
@@ -67,7 +71,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     function postMarker(){
       axios({
           method: "post",
-          url: "https://api-meta.eskoops.com/markers",
+          url: "http://44.195.32.62:1337/markers",
           data: formData,
           headers: { 
               "Content-Type": "multipart/form-data",
@@ -98,7 +102,9 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
               project:project,
               projectId:projectId,
               markerId:markerId,
-              destinationPage:destinationId
+              destinationPage:destinationId,
+              bckImgUrl:bckImgUrl,
+              vdImgUrl:vdImgUrl
           }
       })  
       }

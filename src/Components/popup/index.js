@@ -34,6 +34,8 @@ const BootstrapDialogs = styled(Dialog)(({ theme }) => ({
       const token=props.token
       const project=props.project
       const projectId=props.projectId
+      const vdImgUrl=props.vdImgUrl;
+      const bckImgUrl=props.bckImgUrl
       var formData=new FormData();  
       formData.append('data',JSON.stringify({
         'page':pageId
@@ -45,6 +47,7 @@ const BootstrapDialogs = styled(Dialog)(({ theme }) => ({
       console.log(project,"vdpopproject")
       console.log(projectId,"vdpopproid")
       console.log(vdAreaId,"vdAreaId")
+      console.log(vdImgUrl,"vdIMGURL")
     const handleClickOpen = () => {
       setOpen(true);
     };
@@ -55,7 +58,7 @@ const BootstrapDialogs = styled(Dialog)(({ theme }) => ({
     function postVideoArea(){
       axios({
           method: "post",
-          url: "https://api-meta.eskoops.com/video-areas",
+          url: "http://44.195.32.62:1337/video-areas",
           data: formData,
           headers: { 
               "Content-Type": "multipart/form-data",
@@ -84,7 +87,9 @@ const BootstrapDialogs = styled(Dialog)(({ theme }) => ({
               token:token,
               project:project,
               projectId:projectId,
-              vdAreaId:vdAreaId
+              vdAreaId:vdAreaId,
+              vdImgUrl:vdImgUrl,
+              bckImgUrl:bckImgUrl
           }
       })   
       }
@@ -98,7 +103,7 @@ const BootstrapDialogs = styled(Dialog)(({ theme }) => ({
           open={open}
           
         >
-          <DialogContent dividers style={{width:480,height:440,overflowX:'hidden',overflowY:"hidden"}}>
+          <DialogContent dividers style={{width:480,height:460,overflowX:'hidden',overflowY:"hidden"}}>
             <Typography gutterBottom>
             <Grid className="det-cont">
             <div >

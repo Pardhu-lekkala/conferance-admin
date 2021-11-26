@@ -35,12 +35,15 @@ const BootstrapDialogs = styled(Dialog)(({ theme }) => ({
       let xCoordinate=props.xCor;
       let yCoordinate=props.yCor;
       let TransVideo=props.transVideo;
+      let bckImgUrl=props.bckImgUrl
+      let vdImgUrl=props.vdImgUrl
       console.log(openPopUp)
       console.log(linkType)
       console.log(project,'popproject')
       console.log(token,'poptoken')
       console.log(videoLink)
       console.log(projectId,"popprojid")
+      console.log(bckImgUrl,"BCKIMGURLPOP")
     const handleClickOpen = () => {
       setOpen(true);
     };
@@ -61,7 +64,10 @@ const BootstrapDialogs = styled(Dialog)(({ theme }) => ({
             destinationLink:desLink,
             xCoordinate:xCoordinate,
             yCoordinate:yCoordinate,
-            transVideo:TransVideo
+            transVideo:TransVideo,
+            bckImgUrl:bckImgUrl,
+            vdImgUrl:vdImgUrl
+
         }
     })  
     }

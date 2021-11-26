@@ -7,11 +7,16 @@ import initial from "../../Assets/Images/Initials.png"
 import { useHistory } from "react-router";
 import ProjectDetails from "../DetailsCard";
 
-const NavBar=()=>{
-
+const NavBar=(props)=>{
+    const token=props.token
+    console.log(token,"JWTTOKEN")
     const history=useHistory()
     function navigateToCreateProject(){
-        history.push("/createproject")
+        history.push({
+            pathname:'/createproject',
+            state:{
+                token:token,
+            }})
     }
     return(
         <div className="mainContainer">

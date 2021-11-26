@@ -13,6 +13,8 @@ import AddMarker from "./Components/AddMarker";
 import AddVideoArea from "./Components/AddVideoArea";
 import VideoPlayer from "./Components/VideoPlayer";
 import DrawRectangle from "./Components/DrawRectangle";
+import UseQuery from "./Components/UseQuery";
+
 
 function App() {
   return (
@@ -27,9 +29,10 @@ function App() {
             <Route exact path={"/customlogin"} component={CustomLogin}/>
             <Route exact path={"/projectdetails"} component={ProjectDetails}/>
             <Route exact path={"/newpage"} component={CreateNewPage}/>
-            <Route exact path={"/addpage"} component={AddPage}/>
+            <Route path="/addpage" component={AddPage}/>
             <Route exact path={"/markerlocation"} component={AddMarker}/>
             <Route exact path={"/videoarea"} component={AddVideoArea}/>
+            <Route exact path={"/query"} component={UseQuery}/>
             <Route exact path={"/videoplayer"} component={VideoPlayer}/>
             <Route exact path={"/drawshape"} component={DrawRectangle}/>
           </Switch>

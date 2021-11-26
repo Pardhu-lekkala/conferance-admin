@@ -40,6 +40,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
       const project=props.project
       const projectId=props.projectId
       const editMarkerId=props.editMarkId
+      const bckImgUrl=props.bckImgUrl
       var formData=new FormData();  
       formData.append('data',JSON.stringify({
         'page':id
@@ -54,6 +55,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
       console.log(project,"projectscene")
       console.log(token,'tokenscene')
       console.log(editMarkerId,"editmarkid")
+      console.log(bckImgUrl,"editbckimg")
     const switchToggle=()=>{
       labelSwitch ? setLabelSwitch(false) : setLabelSwitch(true)
     }  
@@ -79,8 +81,8 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
               project:project,
               projectId:projectId,
               markerId:editMarkerId,
-              destinationPage:destinationId
-
+              destinationPage:destinationId,
+              bckImgUrl:bckImgUrl
           }
       })  
       }

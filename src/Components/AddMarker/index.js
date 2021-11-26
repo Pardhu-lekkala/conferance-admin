@@ -34,17 +34,21 @@ const AddMarker=(props)=>{
     const projectId=props.location.state.projectId
     const markerId=props.location.state.markerId
     const destinationPageId=props.location.state.destinationPage
+    const bckImgUrl=props.location.state.bckImgUrl
+    const vdImgUrl=props.location.state.vdImgUrl
     console.log(projectId,"markproid")
     console.log(markerId,"markerIdput")
+    console.log(bckImgUrl,"BCKIMGURL")
     //const markerPosition=(x,y)
     console.log(TransVideo,'trans video')
     console.log(token)
-    console.log(markerName)
+    console.log(markerName,"markername")
     console.log(page,'pagesid')
     console.log(destinationLink,'deslink')
     console.log(destinationType,'destype')
     console.log(VisibileLabel,'vslabel')
     console.log(project,'markproject')
+    console.log(destinationPageId,"despgid")
     var formData=new FormData();  
     formData.append('files.TransVideo',TransVideo)
     formData.append('data',JSON.stringify({
@@ -78,7 +82,7 @@ const AddMarker=(props)=>{
     function postMarker(){
       axios({
           method: "PUT",
-          url: `https://api-meta.eskoops.com/markers/${markerId}`,
+          url: `http://44.195.32.62:1337/markers/${markerId}`,
           data: formData,
           headers: { 
               "Content-Type": "multipart/form-data",
@@ -101,7 +105,7 @@ const AddMarker=(props)=>{
         <>
         <div>
             <NavBar/>
-            <div style={{ backgroundImage: `url(${audit})` }} className="mark-img" onMouseUpCapture={onMouseMove} onClick={()=>{hexOpen?setOpen(false):setOpen(true);setPrevX(x);setPrevY(y)}}> 
+            <div style={{ backgroundImage: `url(${bckImgUrl})` }} className="mark-img" onMouseUpCapture={onMouseMove} onClick={()=>{hexOpen?setOpen(false):setOpen(true);setPrevX(x);setPrevY(y)}}> 
             <div style={{width:"100%",display:"flex",flexDirection:"row",justifyContent:"flex-end"}} onClick={()=>{setx(prevX);sety(prevY);}}>
             <button style={{height:"30px",width:"70px",margin:"15px"}} onClick={postMarker}>Save</button>
             </div>
@@ -123,6 +127,7 @@ const AddMarker=(props)=>{
               <button onClick={postMarker}>click</button>
             </div>*/}
         </div>
+        
         <MarkerPopUp 
         open={open} 
         project={project} 
@@ -132,9 +137,12 @@ const AddMarker=(props)=>{
         label={VisibileLabel} 
         destType={destinationType} 
         desLink={destinationLink} 
+        bckImgUrl={bckImgUrl}
+        vdImgUrl={vdImgUrl}
         xCor={x}
         yCor={y}
         transVideo={TransVideo}
+        bckImgUrl={bckImgUrl}
         setOpen={setOpen} 
         style={{position:"absolute",top:`${y}px`,left:`${x}px`}}
         />

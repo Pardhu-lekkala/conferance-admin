@@ -5,6 +5,8 @@ import { useHistory } from 'react-router';
 import Spinner from '../Components/Spinner';
 import Loader from 'react-loader-spinner';
 import logo from "../Assets/Images/logo.png";
+import axios from "axios";
+
 import {
     Input,
     Grid,
@@ -106,14 +108,26 @@ function Login(){
       if (loader==false){
         SetErrMsg("*Invalid Username or Password")
       }
-      let result=await fetch('https://api-meta.eskoops.com/auth/local',{
+      let result=await fetch('http://44.195.32.62:1337/auth/local',{
          method:"POST",
          body:JSON.stringify(userDetails),
          headers:{
-             "Content-Type":"application/json"
+             'Accept': 'application/json',
+            'Content-Type': 'application/json'
          }
       })
-      result=await result.json()
+      {/*let result=await axios.post('https://api-meta.eskoops.com/auth/local', {
+        identifier: 'test@cumulations.com',
+        password: 'test@123'
+      })
+      .then(function (response) {
+        console.log(response,"responselogin");
+      })
+      .catch(function (error) {
+        console.log(error);
+      });*/}
+
+    result=await result.json()
       if (result.jwt !== undefined){
         setJwt(result.jwt)
         console.log(result)

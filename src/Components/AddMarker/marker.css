@@ -3,3 +3,8 @@
     width: 100%;
     background-size: cover;
 }
+
+.cont-mark{
+    max-height: 120vh;
+    max-width: 150%;
+}
