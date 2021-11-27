@@ -13,3 +13,30 @@
     width: 250px;
     border-radius: 5px;
 }
+
+.ad-btn2{
+    width: 100px;
+    height: 38px;
+    left: 98px;
+    top: 0px;
+    background: #002E5A;
+    border-radius: 4px;
+    font-family: Proxima Nova;
+    margin-bottom: 50px;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    text-align: center;
+    color: #FFFFFF;
+    border-width: 0px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.btn-pop-cont2{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+   
+}

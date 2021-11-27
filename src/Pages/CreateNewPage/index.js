@@ -16,6 +16,7 @@ const CreateNewPage=(props)=>{
     const token=props.location.state.token;
     const projectId=props.location.state.projectId;
     const [open,setOpens]=useState(false);
+    console.log(token,"tokenjwt")
     const history=useHistory()
     function navigateToCustomLogin(){
         history.push("/customlogin")

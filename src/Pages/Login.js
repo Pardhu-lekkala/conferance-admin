@@ -6,6 +6,7 @@ import Spinner from '../Components/Spinner';
 import Loader from 'react-loader-spinner';
 import logo from "../Assets/Images/logo.png";
 import axios from "axios";
+import constants from './constants';
 
 import {
     Input,
@@ -108,7 +109,7 @@ function Login(){
       if (loader==false){
         SetErrMsg("*Invalid Username or Password")
       }
-      let result=await fetch('http://44.195.32.62:1337/auth/local',{
+      let result=await fetch(constants.ipaddress+'/auth/local',{
          method:"POST",
          body:JSON.stringify(userDetails),
          headers:{

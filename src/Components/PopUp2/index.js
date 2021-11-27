@@ -11,6 +11,7 @@ import { Switch } from "@mui/material";
 import swap from "../../Assets/Images/swap.png";
 import { useHistory } from "react-router";
 import axios from "axios";
+import constants from "../../Pages/constants";
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -71,7 +72,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     function postMarker(){
       axios({
           method: "post",
-          url: "http://44.195.32.62:1337/markers",
+          url: constants.ipaddress+"/markers",
           data: formData,
           headers: { 
               "Content-Type": "multipart/form-data",

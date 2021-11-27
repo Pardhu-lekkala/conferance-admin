@@ -10,6 +10,7 @@ import {RadioGroup,FormControl,FormControlLabel,Radio } from "@mui/material";
 import { useState } from "react";
 import { useHistory } from "react-router";
 import axios from "axios";
+import constants from "../../Pages/constants";
 
 const BootstrapDialogs = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -58,7 +59,7 @@ const BootstrapDialogs = styled(Dialog)(({ theme }) => ({
     function postVideoArea(){
       axios({
           method: "post",
-          url: "http://44.195.32.62:1337/video-areas",
+          url: constants.ipaddress+"/video-areas",
           data: formData,
           headers: { 
               "Content-Type": "multipart/form-data",

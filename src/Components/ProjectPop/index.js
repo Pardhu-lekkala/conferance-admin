@@ -11,6 +11,7 @@ import { useHistory } from "react-router";
 import './pops.css';
 import axios from "axios";
 import Loader from 'react-loader-spinner';
+import constants from "../../Pages/constants";
 
 
 const BootstrapDialogs = styled(Dialog)(({ theme }) => ({
@@ -32,7 +33,11 @@ const BootstrapDialogs = styled(Dialog)(({ theme }) => ({
       const project=props.project;
       const accessCode=props.accessCode;
       const token=props.token;
+      console.log(token,"saiitoken")
+      
       const projectId=props.projectId;
+      console.log(projectId,"proid")
+      console.log(pageName,"pgname")
       var formData=new FormData();
       console.log(pageId,"pgidddd")
       formData.append('data',JSON.stringify({
@@ -56,7 +61,7 @@ const BootstrapDialogs = styled(Dialog)(({ theme }) => ({
     function postPage(){
       axios({
           method: "post",
-          url: "http://44.195.32.62:1337/pages",
+          url: constants.ipaddress+"/pages",
           data: formData,
           headers: { 
               "Content-Type": "multipart/form-data",
@@ -102,17 +107,17 @@ const BootstrapDialogs = styled(Dialog)(({ theme }) => ({
             <div container>
                 <input type="text" onChange={(e)=>setPagename(e.target.value)} value={pageName} className="pg-inp-nm"/>
             </div>
-            <div className="btn-pop-cont">
+            <div className="btn-pop-cont2">
                 <button className="btn-cn"onClick={() => {setOpen(false)}} onClose={handleClose}> cancel</button>
-                {pageId==""&&click==false?<button className="ad-btn" onClick={() => {postPage();setClick(true);}}>Create</button>:null}
-                {pageId==""&&click==true?<button className="ad-btn" onClick={() => {postPage();setClick(true);}}>
+                {pageId==""&&click==false?<button className="ad-btn2" onClick={() => {postPage();setClick(true);}}>Create</button>:null}
+                {pageId==""&&click==true?<button className="ad-btn2" onClick={() => {postPage();setClick(true);}}>
                 <Loader type="TailSpin"
                     color="#00BFFF"
                     height={30}
                     width={30}
                     />
                 </button>:null}
-                {pageId!==""?<button className="ad-btn" onClick={navigateAddPage}>Add</button>:null}
+                {pageId!==""?<button className="ad-btn2" onClick={navigateAddPage}>Add</button>:null}
             </div>
         </div>         
         </Typography>

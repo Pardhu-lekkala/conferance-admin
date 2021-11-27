@@ -9,6 +9,7 @@ import {RadioGroup,FormControl,FormControlLabel,Radio } from "@mui/material";
 import { useState } from "react";
 import { useHistory } from "react-router";
 import axios from "axios";
+import constants from "../../Pages/constants";
 import Loader from 'react-loader-spinner';
 
 
@@ -53,7 +54,7 @@ const BootstrapDialogs = styled(Dialog)(({ theme }) => ({
     function deleteVideo(){
         axios({
             method: "DELETE",
-            url: `http://44.195.32.62:1337/video-areas/${deleteVideoId}`,
+            url: constants.ipaddress+`/video-areas/${deleteVideoId}`,
             headers: { 
                 "Content-Type": "multipart/form-data",
                 "Authorization":"Bearer"+" "+token,

@@ -5,6 +5,7 @@ import folder from "../Assets/Images/EmptyState.png"
 import { useHistory } from "react-router";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import constants from "./constants";
 import { ListItem } from "@material-ui/core";
 import { fontWeight } from "@mui/system";
 
@@ -35,7 +36,7 @@ const Home=(props)=>{
   //   })
 
     useEffect(() => {
-      fetch("http://44.195.32.62:1337/projects?_limit=8&_sort=published_at:ASC")
+      fetch(constants.ipaddress+"/projects?_limit=8&_sort=published_at:ASC")
       .then(response => response.json())
       .then(data => setUserlist(data))
     },[])

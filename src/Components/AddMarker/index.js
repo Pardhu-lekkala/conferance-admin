@@ -13,6 +13,7 @@ import axios from "axios";
 import SketchExample from '../ColorPicker';
 import MarkData from '../MarkData';
 import { useEffect } from 'react';
+import constants from '../../Pages/constants';
 //import MarkerData from '../MarkerData';
 //const AnyReactComponent = ({ text }) => <div>{text}</div>;
 const AddMarker=(props)=>{
@@ -82,7 +83,7 @@ const AddMarker=(props)=>{
     function postMarker(){
       axios({
           method: "PUT",
-          url: `http://44.195.32.62:1337/markers/${markerId}`,
+          url: constants.ipaddress+`/markers/${markerId}`,
           data: formData,
           headers: { 
               "Content-Type": "multipart/form-data",

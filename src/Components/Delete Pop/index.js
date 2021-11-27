@@ -9,6 +9,7 @@ import {RadioGroup,FormControl,FormControlLabel,Radio } from "@mui/material";
 import { useState } from "react";
 import { useHistory } from "react-router";
 import axios from "axios";
+import constants from "../../Pages/constants";
 import Loader from 'react-loader-spinner';
 
 
@@ -53,7 +54,7 @@ const BootstrapDialogs = styled(Dialog)(({ theme }) => ({
     function deleteMarker(){
         axios({
             method: "DELETE",
-            url: `http://44.195.32.62:1337/markers/${deleteId}`,
+            url: constants.ipaddress+`/markers/${deleteId}`,
             headers: { 
                 "Content-Type": "multipart/form-data",
                 "Authorization":"Bearer"+" "+token,

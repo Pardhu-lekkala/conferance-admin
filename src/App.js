@@ -30,6 +30,7 @@ function App() {
             <Route exact path={"/projectdetails"} component={ProjectDetails}/>
             <Route exact path={"/newpage"} component={CreateNewPage}/>
             <Route path="/addpage" component={AddPage}/>
+            {/*<Route path="/addpage/:id" render={(project=287,page=229) => <AddPage {...project,page}/>}/>*/}
             <Route exact path={"/markerlocation"} component={AddMarker}/>
             <Route exact path={"/videoarea"} component={AddVideoArea}/>
             <Route exact path={"/query"} component={UseQuery}/>

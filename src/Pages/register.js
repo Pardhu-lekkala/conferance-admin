@@ -2,6 +2,7 @@ import { makeStyles,  } from '@material-ui/core/styles';
 import React, { useState } from 'react';
 import { useTheme } from '@material-ui/core/styles';
 import { useHistory } from 'react-router';
+import constants from './constants';
 import {
     Input,
     Grid,
@@ -80,7 +81,7 @@ function SignUp(props) {
       let userDetails={email,username,password}
       console.log(userDetails)
 
-      let result=await fetch('http://44.195.32.62:1337/auth/local/register',{
+      let result=await fetch(constants.ipaddress+'/auth/local/register',{
          method:"POST",
          body:JSON.stringify(userDetails),
          headers:{

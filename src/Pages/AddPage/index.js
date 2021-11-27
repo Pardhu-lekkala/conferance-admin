@@ -25,15 +25,19 @@ import DeletePop from "../../Components/Delete Pop";
 import DeleteVideoPop from "../../Components/Delete Video Pop";
 import EditMarkerPop from "../../Components/EditMarkerPop";
 import EditVideoPop from "../../Components/EditVideoPop";
+import constants from "../constants";
 import {Link,BrowserRouter as Router,Route } from "react-router-dom";
 import { CountertopsOutlined } from "@mui/icons-material";
 
 const AddPage=(props)=>{
-    const params=useParams();
     const history=useHistory();
+    const params=useParams()
     const location=useLocation();
     const search=useLocation().search
-    const urlId=new URLSearchParams(search).get('page')
+    const urlPageId=new URLSearchParams(search).get('page')
+    const urlProjectId=new URLSearchParams(search).get('project')
+    console.log(urlPageId,"urlpageid")
+    console.log(urlProjectId,"urlprojectid")
     const fileInputRef=useRef();
     const fileIconRef=useRef();
     const fileVideoRef=useRef();
@@ -107,7 +111,7 @@ const AddPage=(props)=>{
     console.log(url,"URLBACK")
     //let resPageName=pages[0].pageName
     //console.log(resPageName,'pagggggg')
-    const baseURL=`http://44.195.32.62:1337/projects/${ids}`
+    const baseURL=constants.ipaddress+`/projects/${ids}`
     console.log(pages,"pages")
     console.log(markers,"markersdata")
     console.log(videoArea,"vdareadata")
@@ -131,10 +135,8 @@ const AddPage=(props)=>{
     console.log(resBckImgUrl,"responsebckimgurl")
     console.log(resVdImgUrl,"responsevdimgurl")
     console.log(location,"locationres")
-    console.log(urlId,"URLID");
     console.log(params,"PARAMETERS")
-
-    
+    //console.log(match.params.id,"paramsdetails")
 
     const clickToggle=()=>{
         click ? setClick(false) : setClick(true)
@@ -154,7 +156,7 @@ const AddPage=(props)=>{
     function currentUrl(page){
             history.push({
                 pathname: "/addpage",
-                search: `?${ids}page=${page}`,
+                search: `?project=${ids}&page=${page}`,
                 hash: "",
                 state:{
                     projectId:ids,
@@ -197,7 +199,7 @@ const AddPage=(props)=>{
     function updatePage(){
         axios({
             method: "PUT",
-            url: `http://44.195.32.62:1337/pages/${currentPagesId}`,
+            url: constants.ipaddress+`/pages/${currentPagesId}`,
             data: formData,
             headers: { 
                 "Content-Type": "multipart/form-data",

@@ -6,6 +6,7 @@ import VideoPlayer from "../VideoPlayer";
 import DrawRectangle from "../DrawRectangle";
 import axios from "axios";
 import { useHistory } from "react-router";
+import constants from "../../Pages/constants";
 
 const AddVideoArea=(props)=>{
     const history=useHistory()
@@ -60,7 +61,7 @@ const AddVideoArea=(props)=>{
       function postVideoArea(){
         axios({
             method: "PUT",
-            url: `http://44.195.32.62:1337/video-areas/${vdAreaId}`,
+            url: constants.ipaddress+`/video-areas/${vdAreaId}`,
             data: formData,
             headers: { 
                 "Content-Type": "multipart/form-data",
